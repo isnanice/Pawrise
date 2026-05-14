@@ -66,4 +66,13 @@ class HomeController extends Controller
     {
         return view('home.volunteer');
     }
+    public function shelterProfile(\App\Models\Shelter $shelter)
+    {
+        $animals = $shelter->animals()
+            ->where('status', 'tersedia')
+            ->latest()
+            ->paginate(6);
+
+        return view('home.shelter_profile', compact('shelter', 'animals'));
+    }
 }

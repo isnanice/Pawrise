@@ -104,10 +104,17 @@
 
             {{-- Tombol aksi --}}
             @if($app->status === 'disetujui')
-            <a href="{{ route('animals.show', $app->animal) }}"
+            @php
+            $phone = $app->animal->shelter?->phone;
+            $phone = $phone ? preg_replace('/[^0-9]/', '', $phone) : null;
+            $phone = $phone && str_starts_with($phone, '0') ? '62' . substr($phone, 1) : $phone;
+            $waMsg = urlencode('Halo, saya ' . $app->full_name . ' ingin menjadwalkan penjemputan untuk ' . $app->animal->name . '. Permohonan adopsi saya telah disetujui.');
+            @endphp
+            <a href="{{ $phone ? 'https://wa.me/' . $phone . '?text=' . $waMsg : '#' }}"
+                target="_blank"
                 class="btn btn-sm pr-btn-primary"
                 style="border-radius: 10px; font-size: .85rem; padding: 6px 18px;">
-                Langkah Selanjutnya
+                <i class="bi bi-whatsapp me-1"></i> Langkah Selanjutnya
             </a>
             @elseif($app->status === 'ditolak')
             <a href="{{ route('catalog.index') }}"

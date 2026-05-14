@@ -33,6 +33,7 @@ Route::get('/kebijakan-privasi', [HomeController::class, 'privacy'])->name('priv
 Route::get('/syarat-ketentuan', [HomeController::class, 'terms'])->name('terms');
 Route::get('/kontak-shelter', [HomeController::class, 'shelterContact'])->name('shelterContact');
 Route::get('/gabung-relawan', [HomeController::class, 'volunteer'])->name('volunteer');
+Route::get('/shelter/{shelter}', [HomeController::class, 'shelterProfile'])->name('shelter.profile');
 
 // ============================================================
 // Auth

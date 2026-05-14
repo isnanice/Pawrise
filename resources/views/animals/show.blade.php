@@ -3,98 +3,108 @@
 @section('content')
 
 <style>
-.detail-photo-main {
-    width: 100%;
-    aspect-ratio: 4 / 3.5;
-    object-fit: cover;
-    border-radius: 18px;
-    display: block;
-    cursor: zoom-in;
-}
-.detail-thumb {
-    width: 88px;
-    height: 66px;
-    object-fit: cover;
-    border-radius: 10px;
-    cursor: pointer;
-    border: 2.5px solid transparent;
-    transition: border-color .15s;
-    display: block;
-}
-.detail-thumb.active,
-.detail-thumb:hover {
-    border-color: var(--pr-orange);
-}
-.stat-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    border-radius: 14px;
-    background: var(--pr-bg);
-    border: 1px solid var(--pr-border);
-    height: 100%;
-}
-.stat-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 1rem;
-}
-.stat-label {
-    font-size: .68rem;
-    text-transform: uppercase;
-    letter-spacing: .07em;
-    font-weight: 700;
-    color: var(--pr-text-muted);
-    margin-bottom: 2px;
-}
-.stat-value {
-    font-weight: 700;
-    font-size: .95rem;
-    color: var(--pr-text);
-    line-height: 1.2;
-}
-.cta-box {
-    border: 1px solid var(--pr-border);
-    border-radius: 16px;
-    padding: 20px;
-    background: #fff;
-}
-.shelter-card {
-    border: 1px solid var(--pr-border);
-    border-radius: 16px;
-    padding: 20px;
-    background: #fff;
-}
-.trait-tag {
-    display: inline-block;
-    padding: 5px 14px;
-    border-radius: 999px;
-    background: var(--pr-orange-light);
-    color: var(--pr-orange-dark);
-    font-size: .85rem;
-    font-weight: 500;
-}
-.medis-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 6px 0;
-    font-size: .95rem;
-}
+    .detail-photo-main {
+        width: 100%;
+        aspect-ratio: 4 / 3.5;
+        object-fit: cover;
+        border-radius: 18px;
+        display: block;
+        cursor: zoom-in;
+    }
+
+    .detail-thumb {
+        width: 88px;
+        height: 66px;
+        object-fit: cover;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2.5px solid transparent;
+        transition: border-color .15s;
+        display: block;
+    }
+
+    .detail-thumb.active,
+    .detail-thumb:hover {
+        border-color: var(--pr-orange);
+    }
+
+    .stat-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: var(--pr-bg);
+        border: 1px solid var(--pr-border);
+        height: 100%;
+    }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 1rem;
+    }
+
+    .stat-label {
+        font-size: .68rem;
+        text-transform: uppercase;
+        letter-spacing: .07em;
+        font-weight: 700;
+        color: var(--pr-text-muted);
+        margin-bottom: 2px;
+    }
+
+    .stat-value {
+        font-weight: 700;
+        font-size: .95rem;
+        color: var(--pr-text);
+        line-height: 1.2;
+    }
+
+    .cta-box {
+        border: 1px solid var(--pr-border);
+        border-radius: 16px;
+        padding: 20px;
+        background: #fff;
+    }
+
+    .shelter-card {
+        border: 1px solid var(--pr-border);
+        border-radius: 16px;
+        padding: 20px;
+        background: #fff;
+    }
+
+    .trait-tag {
+        display: inline-block;
+        padding: 5px 14px;
+        border-radius: 999px;
+        background: var(--pr-orange-light);
+        color: var(--pr-orange-dark);
+        font-size: .85rem;
+        font-weight: 500;
+    }
+
+    .medis-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 6px 0;
+        font-size: .95rem;
+    }
 </style>
 
 <div class="container py-4" style="max-width: 1080px;">
 
     {{-- Back --}}
     <a href="{{ route('catalog.index') }}"
-       class="d-inline-flex align-items-center gap-2 mb-4 text-decoration-none fw-semibold"
-       style="color: var(--pr-text-muted); font-size: .88rem;">
+        class="d-inline-flex align-items-center gap-2 mb-4 text-decoration-none fw-semibold"
+        style="color: var(--pr-text-muted); font-size: .88rem;">
         <i class="bi bi-arrow-left"></i> Kembali ke Katalog
     </a>
 
@@ -106,28 +116,28 @@
 
             {{-- Foto utama --}}
             <img id="mainPhoto"
-                 src="{{ $animal->mainPhotoUrl() }}"
-                 alt="{{ $animal->name }}"
-                 class="detail-photo-main mb-3"
-                 onclick="openLightbox(this.src)">
+                src="{{ $animal->mainPhotoUrl() }}"
+                alt="{{ $animal->name }}"
+                class="detail-photo-main mb-3"
+                onclick="openLightbox(this.src)">
 
             {{-- Thumbnails --}}
             @if($animal->photos->count())
             <div class="d-flex gap-2 flex-wrap mb-4">
                 <img src="{{ $animal->mainPhotoUrl() }}"
-                     class="detail-thumb active"
-                     alt=""
-                     onclick="switchPhoto(this)">
+                    class="detail-thumb active"
+                    alt=""
+                    onclick="switchPhoto(this)">
                 @foreach($animal->photos->take(3) as $photo)
-                    <img src="{{ asset('storage/' . $photo->photo_path) }}"
-                         class="detail-thumb"
-                         alt=""
-                         onclick="switchPhoto(this)">
+                <img src="{{ asset('storage/' . $photo->photo_path) }}"
+                    class="detail-thumb"
+                    alt=""
+                    onclick="switchPhoto(this)">
                 @endforeach
                 @if($animal->photos->count() > 3)
                 <div style="width:88px;height:66px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;">
                     <img src="{{ asset('storage/' . $animal->photos->get(3)->photo_path) }}"
-                         style="width:100%;height:100%;object-fit:cover;opacity:.45;" alt="">
+                        style="width:100%;height:100%;object-fit:cover;opacity:.45;" alt="">
                     <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
                                  color:#fff;font-weight:700;font-size:1.1rem;background:rgba(0,0,0,.25);">
                         +{{ $animal->photos->count() - 3 }}
@@ -147,10 +157,10 @@
             @if($animal->medical_history)
             <h5 class="fw-bold mt-4 mb-3">Riwayat Medis</h5>
             @foreach(array_filter(array_map('trim', explode("\n", $animal->medical_history))) as $item)
-                <div class="medis-item">
-                    <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);"></i>
-                    <span>{{ $item }}</span>
-                </div>
+            <div class="medis-item">
+                <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);"></i>
+                <span>{{ $item }}</span>
+            </div>
             @endforeach
             @endif
 
@@ -203,7 +213,7 @@
                     <div class="stat-card">
                         <div class="stat-icon" style="background:#FCE7F3;">
                             <i class="bi bi-gender-{{ $animal->gender === 'betina' ? 'female' : 'male' }}"
-                               style="color:#9D174D;"></i>
+                                style="color:#9D174D;"></i>
                         </div>
                         <div>
                             <div class="stat-label">Gender</div>
@@ -219,7 +229,7 @@
                         <div>
                             <div class="stat-label">Vaksinasi</div>
                             <div class="stat-value"
-                                 style="color:{{ $animal->vaccinated ? 'var(--pr-success)' : 'var(--pr-text-muted)' }};">
+                                style="color:{{ $animal->vaccinated ? 'var(--pr-success)' : 'var(--pr-text-muted)' }};">
                                 {{ $animal->vaccinated ? 'Lengkap' : 'Belum' }}
                             </div>
                         </div>
@@ -232,7 +242,7 @@
             <h6 class="fw-bold mb-2" style="font-size:.95rem;">Sifat & Karakter</h6>
             <div class="d-flex flex-wrap gap-2 mb-3">
                 @foreach($animal->characteristicsArray() as $trait)
-                    <span class="trait-tag">{{ $trait }}</span>
+                <span class="trait-tag">{{ $trait }}</span>
                 @endforeach
             </div>
             @endif
@@ -244,52 +254,52 @@
                 </p>
 
                 @if($animal->status === 'tersedia')
-                    @auth
-                        @if(auth()->user()->isAdopter())
-                            <a href="{{ route('adoption.create', $animal) }}"
-                               class="btn pr-btn-primary w-100 mb-2 d-flex align-items-center justify-content-center gap-2"
-                               style="border-radius:12px;padding:13px;font-size:.97rem;">
-                                <i class="bi bi-heart-fill"></i> Ajukan Adopsi
-                            </a>
-                        @else
-                            <button class="btn w-100 mb-2" disabled
-                                    style="border-radius:12px;padding:13px;background:#f3f4f6;color:#9ca3af;font-weight:600;">
-                                Login sebagai adopter untuk mengadopsi
-                            </button>
-                        @endif
-                    @else
-                        <a href="{{ route('login') }}"
-                           class="btn pr-btn-primary w-100 mb-2 d-flex align-items-center justify-content-center gap-2"
-                           style="border-radius:12px;padding:13px;font-size:.97rem;">
-                            <i class="bi bi-heart-fill"></i> Masuk untuk Mengadopsi
-                        </a>
-                    @endauth
+                @auth
+                @if(auth()->user()->isAdopter())
+                <a href="{{ route('adoption.create', $animal) }}"
+                    class="btn pr-btn-primary w-100 mb-2 d-flex align-items-center justify-content-center gap-2"
+                    style="border-radius:12px;padding:13px;font-size:.97rem;">
+                    <i class="bi bi-heart-fill"></i> Ajukan Adopsi
+                </a>
                 @else
-                    <button class="btn w-100 mb-2" disabled
-                            style="border-radius:12px;padding:13px;background:#f3f4f6;color:#9ca3af;font-weight:600;">
-                        Tidak Tersedia
-                    </button>
+                <button class="btn w-100 mb-2" disabled
+                    style="border-radius:12px;padding:13px;background:#f3f4f6;color:#9ca3af;font-weight:600;">
+                    Login sebagai adopter untuk mengadopsi
+                </button>
+                @endif
+                @else
+                <a href="{{ route('login') }}"
+                    class="btn pr-btn-primary w-100 mb-2 d-flex align-items-center justify-content-center gap-2"
+                    style="border-radius:12px;padding:13px;font-size:.97rem;">
+                    <i class="bi bi-heart-fill"></i> Masuk untuk Mengadopsi
+                </a>
+                @endauth
+                @else
+                <button class="btn w-100 mb-2" disabled
+                    style="border-radius:12px;padding:13px;background:#f3f4f6;color:#9ca3af;font-weight:600;">
+                    Tidak Tersedia
+                </button>
                 @endif
 
                 <div class="d-flex gap-2">
                     @php $wa = $animal->shelter?->whatsapp ? preg_replace('/[^0-9]/', '', $animal->shelter->whatsapp) : null; @endphp
                     @if($wa)
-                        <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Halo, saya ingin bertanya tentang ' . $animal->name) }}"
-                           target="_blank"
-                           class="btn flex-grow-1 fw-semibold"
-                           style="border:1.5px solid var(--pr-orange);color:var(--pr-orange);border-radius:12px;padding:10px;">
-                            Tanya Shelter
-                        </a>
+                    <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Halo, saya ingin bertanya tentang ' . $animal->name) }}"
+                        target="_blank"
+                        class="btn flex-grow-1 fw-semibold"
+                        style="border:1.5px solid var(--pr-orange);color:var(--pr-orange);border-radius:12px;padding:10px;">
+                        Tanya Shelter
+                    </a>
                     @else
-                        <button class="btn flex-grow-1 fw-semibold"
-                                style="border:1.5px solid var(--pr-orange);color:var(--pr-orange);border-radius:12px;padding:10px;">
-                            Tanya Shelter
-                        </button>
+                    <button class="btn flex-grow-1 fw-semibold"
+                        style="border:1.5px solid var(--pr-orange);color:var(--pr-orange);border-radius:12px;padding:10px;">
+                        Tanya Shelter
+                    </button>
                     @endif
                     <button onclick="shareAnimal()"
-                            class="btn"
-                            style="border:1.5px solid var(--pr-border);border-radius:12px;padding:10px 14px;color:var(--pr-text-muted);"
-                            title="Bagikan">
+                        class="btn"
+                        style="border:1.5px solid var(--pr-border);border-radius:12px;padding:10px 14px;color:var(--pr-text-muted);"
+                        title="Bagikan">
                         <i class="bi bi-share"></i>
                     </button>
                 </div>
@@ -312,7 +322,10 @@
                     {{ $animal->shelter->description ?? 'Shelter ini berdedikasi untuk menyelamatkan dan merawat hewan terlantar di area ' . ($animal->shelter->city ?? 'Indonesia') . '.' }}
                 </p>
                 <a href="#" class="text-decoration-none fw-semibold" style="color:var(--pr-orange);font-size:.88rem;">
-                    Lihat Profil Shelter →
+                    <a href="{{ route('shelter.profile', $animal->shelter) }}"
+                        class="text-decoration-none fw-semibold" style="color:var(--pr-orange);font-size:.88rem;">
+                        Lihat Profil Shelter →
+                    </a>
                 </a>
             </div>
 
@@ -327,9 +340,9 @@
     <h3 class="fw-bold mb-4">Hewan Serupa</h3>
     <div class="row g-3">
         @foreach($similar as $a)
-            <div class="col-6 col-md-3">
-                @include('partials.animal-card', ['animal' => $a])
-            </div>
+        <div class="col-6 col-md-3">
+            @include('partials.animal-card', ['animal' => $a])
+        </div>
         @endforeach
     </div>
     @endif
@@ -338,33 +351,41 @@
 
 {{-- Lightbox --}}
 <div id="lightbox" onclick="closeLightbox()"
-     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);
+    style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);
             z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;">
     <img id="lightboxImg" src="" alt=""
-         style="max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);">
+        style="max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);">
 </div>
 
 <script>
-function switchPhoto(el) {
-    document.getElementById('mainPhoto').src = el.src;
-    document.querySelectorAll('.detail-thumb').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-}
-function openLightbox(src) {
-    document.getElementById('lightboxImg').src = src;
-    document.getElementById('lightbox').style.display = 'flex';
-}
-function closeLightbox() {
-    document.getElementById('lightbox').style.display = 'none';
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-function shareAnimal() {
-    if (navigator.share) {
-        navigator.share({ title: '{{ $animal->name }} - PawRise', url: window.location.href });
-    } else {
-        navigator.clipboard.writeText(window.location.href).then(() => alert('Link disalin!'));
+    function switchPhoto(el) {
+        document.getElementById('mainPhoto').src = el.src;
+        document.querySelectorAll('.detail-thumb').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
     }
-}
+
+    function openLightbox(src) {
+        document.getElementById('lightboxImg').src = src;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    function shareAnimal() {
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ $animal->name }} - PawRise',
+                url: window.location.href
+            });
+        } else {
+            navigator.clipboard.writeText(window.location.href).then(() => alert('Link disalin!'));
+        }
+    }
 </script>
 
 @endsection
