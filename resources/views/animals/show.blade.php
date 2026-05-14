@@ -291,10 +291,18 @@
                         Tanya Shelter
                     </a>
                     @else
-                    <button class="btn flex-grow-1 fw-semibold"
+                    @php
+                    $phone = $animal->shelter?->phone;
+                    $phone = $phone ? preg_replace('/[^0-9]/', '', $phone) : null;
+                    $phone = $phone && str_starts_with($phone, '0') ? '62' . substr($phone, 1) : $phone;
+                    $waMsg = urlencode('Halo, saya ingin bertanya tentang ' . $animal->name . ' yang ada di ' . ($animal->shelter->shelter_name ?? 'shelter Anda'));
+                    @endphp
+                    <a href="{{ $phone ? 'https://wa.me/' . $phone . '?text=' . $waMsg : '#' }}"
+                        target="_blank"
+                        class="btn flex-grow-1 fw-semibold"
                         style="border:1.5px solid var(--pr-orange);color:var(--pr-orange);border-radius:12px;padding:10px;">
                         Tanya Shelter
-                    </button>
+                    </a>
                     @endif
                     <button onclick="shareAnimal()"
                         class="btn"
