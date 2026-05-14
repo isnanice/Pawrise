@@ -64,8 +64,8 @@
         <div>
             <label class="form-label fw-bold" style="font-size: 0.85rem;">Kata Sandi</label>
             <div class="input-group">
-                <input type="password" name="password" class="form-control border-end-0" style="background: #F8FAFC;" placeholder="Minimal 8 karakter" required>
-                <span class="input-group-text bg-transparent border-start-0 text-muted" style="background: #F8FAFC;">
+                <input type="password" name="password" id="password" class="form-control border-end-0" style="background: #F8FAFC;" placeholder="Minimal 8 karakter" required>
+                <span class="input-group-text bg-transparent border-start-0 text-muted" style="background: #F8FAFC; cursor: pointer;" onclick="togglePassword('password', this)">
                     <i class="bi bi-eye-slash"></i>
                 </span>
             </div>
@@ -78,4 +78,20 @@
         <span class="text-muted">Sudah punya akun?</span>
         <a href="{{ route('login') }}" class="text-decoration-none fw-bold" style="color: #A16207;">Masuk di sini</a>
     </div>
+
+    <script>
+        function togglePassword(inputId, iconSpan) {
+            const input = document.getElementById(inputId);
+            const icon = iconSpan.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        }
+    </script>
 @endsection
