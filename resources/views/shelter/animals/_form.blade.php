@@ -24,7 +24,7 @@
                 </select>
             </div>
             <div class="col-md-3"><label class="form-label">Usia (bulan)</label><input type="number" name="age_months" value="{{ old('age_months', $animal->age_months ?? '') }}" class="form-control" min="0" required></div>
-            <div class="col-md-3"><label class="form-label">Berat (kg)</label><input type="number" step="0.1" name="weight_kg" value="{{ old('weight_kg', $animal->weight_kg ?? '') }}" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">Berat (kg)</label><input type="number" step="0.1" name="weight_kg" value="{{ old('weight_kg', $animal->weight_kg ?? '') }}" class="form-control" min="0"></div>
             <div class="col-md-3"><label class="form-label">Jenis Kelamin</label>
                 <select name="gender" class="form-select" required>
                     <option value="jantan" {{ old('gender', $animal->gender ?? '') == 'jantan' ? 'selected':'' }}>Jantan</option>

@@ -4,15 +4,8 @@
             {{-- Brand --}}
             <div class="col-md-5">
                 <a href="{{ route('home') }}" class="pr-brand mb-2 d-inline-flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 100 100" fill="var(--pr-orange)">
-                        <ellipse cx="25" cy="18" rx="11" ry="14"/>
-                        <ellipse cx="50" cy="11" rx="11" ry="14"/>
-                        <ellipse cx="75" cy="18" rx="11" ry="14"/>
-                        <ellipse cx="13" cy="44" rx="9" ry="12"/>
-                        <ellipse cx="87" cy="44" rx="9" ry="12"/>
-                        <path d="M50 34 C33 34 20 45 20 58 C20 70 30 80 50 80 C70 80 80 70 80 58 C80 45 67 34 50 34Z"/>
-                    </svg>
-                    <span>PawRise</span>
+                    <img src="{{ asset('attached_assets/footer.png') }}" width="26" height="26" alt="PawRise" class="me-1">
+                    <span style="color: black;">PawRise</span>
                 </a>
                 <p class="pr-footer-tag mt-1 mb-0">© {{ date('Y') }} PawRise Indonesia. Connect Love, Saving Live.</p>
             </div>

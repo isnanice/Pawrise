@@ -3,6 +3,7 @@
 
 @section('hero_title', 'Selamat Datang Kembali!')
 @section('hero_subtitle', 'Lanjutkan perjalanan mencari teman selamanya')
+@section('hero_image', asset('attached_assets/masuk.png'))
 
 @section('tab_login_class', 'active')
 @section('tab_register_class', '')

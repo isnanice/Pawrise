@@ -187,13 +187,13 @@
         <i class="bi bi-search"></i>
         <input name="q" value="{{ request('q') }}" placeholder="Cari nama atau ras hewan...">
     </div>
-    <select name="species" class="hewan-select">
+    <select name="species" class="hewan-select" onchange="this.form.submit()">
         <option value="">Semua Kategori</option>
         @foreach(['anjing','kucing','lainnya'] as $sp)
             <option value="{{ $sp }}" {{ request('species') == $sp ? 'selected' : '' }}>{{ ucfirst($sp) }}</option>
         @endforeach
     </select>
-    <select name="status" class="hewan-select">
+    <select name="status" class="hewan-select" onchange="this.form.submit()">
         <option value="">Semua Status</option>
         @foreach(['tersedia','diproses','diadopsi'] as $st)
             <option value="{{ $st }}" {{ request('status') == $st ? 'selected' : '' }}>{{ ucfirst($st) }}</option>

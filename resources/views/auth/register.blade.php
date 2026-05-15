@@ -3,6 +3,7 @@
 
 @section('hero_title', 'Selamat Datang!')
 @section('hero_subtitle', 'Mulai perjalanan mencari teman selamanya')
+@section('hero_image', asset('attached_assets/daftar.png'))
 
 @section('tab_login_class', '')
 @section('tab_register_class', 'active')
@@ -51,10 +52,6 @@
         </div>
 
         <div id="shelter-fields" style="display: {{ old('role') === 'shelter' ? 'block' : 'none' }};">
-            <div class="mb-3">
-                <label class="form-label fw-bold" style="font-size: 0.85rem;">Nama Shelter</label>
-                <input type="text" name="shelter_name" value="{{ old('shelter_name') }}" class="form-control" style="background: #F8FAFC;" placeholder="Masukkan nama shelter">
-            </div>
             <div class="mb-3">
                 <label class="form-label fw-bold" style="font-size: 0.85rem;">Kota</label>
                 <input type="text" name="city" value="{{ old('city') }}" class="form-control" style="background: #F8FAFC;" placeholder="Kota domisili shelter">

@@ -42,7 +42,6 @@ class RegisterController extends Controller
             'phone'    => ['required', 'string', 'max:30'],
             'password' => ['required', Password::min(8)],
             'role'     => ['required', 'in:adopter,shelter'],
-            'shelter_name' => ['required_if:role,shelter', 'nullable', 'string', 'max:160'],
             'city'         => ['nullable', 'string', 'max:80'],
         ]);
 
@@ -57,7 +56,7 @@ class RegisterController extends Controller
         if ($user->role === 'shelter') {
             Shelter::create([
                 'user_id'      => $user->id,
-                'shelter_name' => $data['shelter_name'] ?? $user->name,
+                'shelter_name' => $user->name,
                 'city'         => $data['city'] ?? 'Jakarta',
             ]);
         }
