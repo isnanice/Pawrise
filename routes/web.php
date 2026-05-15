@@ -77,6 +77,9 @@ Route::middleware(['auth', 'role:adopter'])->group(function () {
 Route::middleware(['auth', 'role:shelter'])->prefix('shelter')->name('shelter.')->group(function () {
     Route::get('/dashboard', [ShelterDashboard::class, 'index'])->name('dashboard');
 
+    Route::get('/animals/trash', [ShelterAnimalController::class, 'trash'])->name('animals.trash');
+    Route::post('/animals/{id}/restore', [ShelterAnimalController::class, 'restore'])->name('animals.restore');
+    Route::delete('/animals/{id}/force-delete', [ShelterAnimalController::class, 'forceDelete'])->name('animals.force-delete');
     Route::resource('animals', ShelterAnimalController::class)->except(['show']);
 
     Route::get('/permohonan', [ShelterApplicationController::class, 'index'])->name('applications.index');
@@ -108,5 +111,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::delete('/shelter/{shelter}', [AdminShelterController::class, 'destroy'])->name('shelters.destroy');
 
     // Kelola Konten Edukasi
+    Route::get('/edukasi/trash', [AdminEdukasiController::class, 'trash'])->name('edukasi.trash');
+    Route::post('/edukasi/{id}/restore', [AdminEdukasiController::class, 'restore'])->name('edukasi.restore');
+    Route::delete('/edukasi/{id}/force-delete', [AdminEdukasiController::class, 'forceDelete'])->name('edukasi.force-delete');
     Route::resource('edukasi', AdminEdukasiController::class)->parameters(['edukasi' => 'edukasi']);
 });

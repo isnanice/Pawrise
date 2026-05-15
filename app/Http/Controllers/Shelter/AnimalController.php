@@ -84,7 +84,37 @@ class AnimalController extends Controller
     {
         $this->authorizeShelter($animal);
         $animal->delete();
-        return back()->with('success', 'Data hewan berhasil dihapus.');
+        return back()->with('success', 'Data hewan berhasil dipindahkan ke tempat sampah.');
+    }
+
+    public function trash()
+    {
+        $shelter = auth()->user()->shelter;
+        abort_unless($shelter, 403);
+
+        $animals = Animal::onlyTrashed()->where('shelter_id', $shelter->id)->latest()->paginate(10);
+        return view('shelter.animals.trash', compact('animals'));
+    }
+
+    public function restore($id)
+    {
+        $shelter = auth()->user()->shelter;
+        $animal = Animal::withTrashed()->where('shelter_id', $shelter->id)->findOrFail($id);
+        $animal->restore();
+        return redirect()->route('shelter.animals.trash')->with('success', 'Data hewan berhasil dipulihkan.');
+    }
+
+    public function forceDelete($id)
+    {
+        $shelter = auth()->user()->shelter;
+        $animal = Animal::withTrashed()->where('shelter_id', $shelter->id)->findOrFail($id);
+
+        if ($animal->main_photo && !str_starts_with($animal->main_photo, 'http')) {
+            Storage::disk('public')->delete($animal->main_photo);
+        }
+
+        $animal->forceDelete();
+        return redirect()->route('shelter.animals.trash')->with('success', 'Data hewan berhasil dihapus permanen.');
     }
 
     private function authorizeShelter(Animal $animal): void

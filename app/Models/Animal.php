@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Animal extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'shelter_id', 'code', 'name', 'species', 'breed', 'age_months',
         'weight_kg', 'gender', 'size', 'vaccinated', 'sterilized', 'status',
@@ -22,7 +25,7 @@ class Animal extends Model
 
     public function shelter(): BelongsTo
     {
-        return $this->belongsTo(Shelter::class);
+        return $this->belongsTo(Shelter::class)->withTrashed();
     }
 
     public function photos(): HasMany

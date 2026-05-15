@@ -82,9 +82,14 @@
         <h3 class="fw-bold mb-0">Kelola Konten Edukasi</h3>
         <p class="daftar-subtitle">Buat, edit, dan kelola artikel edukasi untuk pengguna PawRise</p>
     </div>
-    <a href="{{ route('admin.edukasi.create') }}" class="btn-tambah">
-        <i class="bi bi-plus-lg"></i> Tambah Konten Baru
-    </a>
+    <div class="d-flex gap-2">
+        <a href="{{ route('admin.edukasi.trash') }}" class="btn-tambah" style="background: #f3f4f6; color: #6b7280; border: 1.5px solid #e5e7eb;">
+            <i class="bi bi-trash"></i> Tempat Sampah
+        </a>
+        <a href="{{ route('admin.edukasi.create') }}" class="btn-tambah">
+            <i class="bi bi-plus-lg"></i> Tambah Konten Baru
+        </a>
+    </div>
 </div>
 
 @if(session('success'))

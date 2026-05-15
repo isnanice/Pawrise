@@ -167,9 +167,14 @@
         <h3 class="fw-bold mb-0">Daftar Hewan Shelter</h3>
         <p class="daftar-subtitle">Kelola data hewan yang berada di bawah pengawasan shelter</p>
     </div>
-    <a href="{{ route('shelter.animals.create') }}" class="btn-tambah">
-        <i class="bi bi-plus-lg"></i> Tambah Hewan Baru
-    </a>
+    <div class="d-flex gap-2">
+        <a href="{{ route('shelter.animals.trash') }}" class="btn-tambah" style="background: #f3f4f6; color: #6b7280; border: 1.5px solid #e5e7eb;">
+            <i class="bi bi-trash"></i> Tempat Sampah
+        </a>
+        <a href="{{ route('shelter.animals.create') }}" class="btn-tambah">
+            <i class="bi bi-plus-lg"></i> Tambah Hewan Baru
+        </a>
+    </div>
 </div>
 
 @if(session('success'))

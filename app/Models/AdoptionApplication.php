@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdoptionApplication extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'animal_id',
         'user_id',
@@ -26,12 +28,12 @@ class AdoptionApplication extends Model
 
     public function animal()
     {
-        return $this->belongsTo(Animal::class);
+        return $this->belongsTo(Animal::class)->withTrashed();
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     // Helper label status untuk tampilan

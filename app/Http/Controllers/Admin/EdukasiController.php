@@ -102,10 +102,30 @@ class EdukasiController extends Controller
 
     public function destroy(KontenEdukasi $edukasi)
     {
+        $edukasi->delete();
+        return redirect()->route('admin.edukasi.index')->with('success', 'Konten edukasi berhasil dipindahkan ke tempat sampah.');
+    }
+
+    public function trash()
+    {
+        $edukasi = KontenEdukasi::onlyTrashed()->latest()->paginate(10);
+        return view('admin.edukasi.trash', compact('edukasi'));
+    }
+
+    public function restore($id)
+    {
+        $edukasi = KontenEdukasi::withTrashed()->findOrFail($id);
+        $edukasi->restore();
+        return redirect()->route('admin.edukasi.trash')->with('success', 'Konten edukasi berhasil dipulihkan.');
+    }
+
+    public function forceDelete($id)
+    {
+        $edukasi = KontenEdukasi::withTrashed()->findOrFail($id);
         if ($edukasi->gambar) {
             Storage::disk('public')->delete($edukasi->gambar);
         }
-        $edukasi->delete();
-        return redirect()->route('admin.edukasi.index')->with('success', 'Konten edukasi berhasil dihapus.');
+        $edukasi->forceDelete();
+        return redirect()->route('admin.edukasi.trash')->with('success', 'Konten edukasi berhasil dihapus permanen.');
     }
 }

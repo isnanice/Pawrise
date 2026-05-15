@@ -50,6 +50,6 @@ class ShelterController extends Controller
     public function destroy(Shelter $shelter)
     {
         $shelter->delete();
-        return redirect()->route('admin.shelters.index')->with('success', 'Data shelter berhasil dihapus.');
+        return redirect()->route('admin.shelters.index')->with('success', 'Data shelter berhasil dihapus (soft delete).');
     }
 }
