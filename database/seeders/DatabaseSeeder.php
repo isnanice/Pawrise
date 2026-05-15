@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Animal;
+use App\Models\AnimalPhoto;
 use App\Models\KontenEdukasi;
 use App\Models\Shelter;
 use App\Models\User;
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'adopter@pawrise.id'],
             [
                 'name'     => 'Sarah Wijaya',
+                'username' => 'sarah_adopter',
                 'phone'    => '081234567890',
                 'password' => bcrypt('password'),
                 'role'     => 'adopter',
@@ -28,7 +30,7 @@ class DatabaseSeeder extends Seeder
         // ===== Shelters (sesuai Figma) =====
         $sh1User = User::firstOrCreate(
             ['email' => 'shelter@pawrise.id'],
-            ['name' => 'Admin Shelter Harapan', 'phone' => '081234500000', 'password' => bcrypt('password'), 'role' => 'shelter']
+            ['name' => 'Admin Shelter Harapan', 'username' => 'shelter_harapan', 'phone' => '081234500000', 'password' => bcrypt('password'), 'role' => 'shelter']
         );
         $shHarapan = Shelter::updateOrCreate(
             ['user_id' => $sh1User->id],
@@ -42,7 +44,7 @@ class DatabaseSeeder extends Seeder
 
         $sh2User = User::firstOrCreate(
             ['email' => 'klinik-sehat@pawrise.id'],
-            ['name' => 'Admin Klinik Hewan Sehat', 'phone' => '082234500000', 'password' => bcrypt('password'), 'role' => 'shelter']
+            ['name' => 'Admin Klinik Hewan Sehat', 'username' => 'klinik_sehat', 'phone' => '082234500000', 'password' => bcrypt('password'), 'role' => 'shelter']
         );
         $shKlinik = Shelter::updateOrCreate(
             ['user_id' => $sh2User->id],
@@ -56,7 +58,7 @@ class DatabaseSeeder extends Seeder
 
         $sh3User = User::firstOrCreate(
             ['email' => 'paws-rescue@pawrise.id'],
-            ['name' => 'Admin Paws Rescue', 'phone' => '083334500000', 'password' => bcrypt('password'), 'role' => 'shelter']
+            ['name' => 'Admin Paws Rescue', 'username' => 'paws_rescue', 'phone' => '083334500000', 'password' => bcrypt('password'), 'role' => 'shelter']
         );
         $shPaws = Shelter::updateOrCreate(
             ['user_id' => $sh3User->id],
@@ -97,7 +99,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($fillers as $i => $f) {
             [$name,$species,$breed,$age,$weight,$gender,$size,$photoId,$shelter] = $f;
-            Animal::updateOrCreate(
+            $animal = Animal::updateOrCreate(
                 ['code' => 'PAW-' . str_pad($i + 1, 3, '0', STR_PAD_LEFT)],
                 [
                     'shelter_id'      => $shelter->id,
@@ -115,6 +117,16 @@ class DatabaseSeeder extends Seeder
                     'main_photo'      => $img($photoId),
                     'status'          => 'tersedia',
                 ]
+            );
+
+            // Tambahkan 2 foto tambahan untuk galeri
+            AnimalPhoto::updateOrCreate(
+                ['animal_id' => $animal->id, 'photo_path' => $img($photoId . '-extra-1')],
+                ['sort_order' => 1]
+            );
+            AnimalPhoto::updateOrCreate(
+                ['animal_id' => $animal->id, 'photo_path' => $img($photoId . '-extra-2')],
+                ['sort_order' => 2]
             );
         }
 
@@ -166,6 +178,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@pawrise.id'],
             [
                 'name'     => 'Admin PawRise',
+                'username' => 'admin_pawrise',
                 'phone'    => '081111111111',
                 'password' => bcrypt('password'),
                 'role'     => 'admin',

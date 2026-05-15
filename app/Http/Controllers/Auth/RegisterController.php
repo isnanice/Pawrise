@@ -28,7 +28,17 @@ class RegisterController extends Controller
 
         $data = $request->validate([
             'name'     => ['required', 'string', 'max:120'],
-            'email'    => ['required', 'email', 'max:160', 'unique:users,email'],
+            'email'    => [
+                'required', 'email', 'max:160', 'unique:users,email',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->role === 'shelter' && !str_ends_with($value, '@pawrise.id')) {
+                        $fail('Pendaftaran Shelter hanya diperbolehkan menggunakan email domain @pawrise.id');
+                    }
+                    if ($request->role === 'adopter' && !str_ends_with($value, '@gmail.com')) {
+                        $fail('Pendaftaran Adopter hanya diperbolehkan menggunakan email domain @gmail.com');
+                    }
+                }
+            ],
             'phone'    => ['required', 'string', 'max:30'],
             'password' => ['required', Password::min(8)],
             'role'     => ['required', 'in:adopter,shelter'],
