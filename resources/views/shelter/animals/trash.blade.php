@@ -1,5 +1,5 @@
 @extends('layouts.shelter')
-@section('title', 'Tempat Sampah Hewan - PawRise Shelter')
+@section('title', 'Arsip Hewan - PawRise Shelter')
 @section('content')
 
 <style>
@@ -37,7 +37,7 @@
 {{-- Header --}}
 <div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-3">
     <div>
-        <h3 class="fw-bold mb-0">Tempat Sampah Hewan</h3>
+        <h3 class="fw-bold mb-0">Arsip Hewan</h3>
         <p class="daftar-subtitle">Data hewan yang baru saja Anda hapus bisa dipulihkan kembali di sini</p>
     </div>
     <a href="{{ route('shelter.animals.index') }}" class="btn-back">
@@ -95,7 +95,7 @@
             @empty
                 <tr>
                     <td colspan="4" class="text-center py-5" style="color: var(--pr-text-muted);">
-                        Tempat sampah kosong.
+                        Arsip kosong.
                     </td>
                 </tr>
             @endforelse

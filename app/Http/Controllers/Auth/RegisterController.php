@@ -7,6 +7,7 @@ use App\Models\Shelter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
@@ -18,6 +19,13 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+        // Auto-correct gmail.con typo
+        if ($request->has('email')) {
+            $request->merge([
+                'email' => str_replace('@gmail.con', '@gmail.com', $request->email)
+            ]);
+        }
+
         $data = $request->validate([
             'name'     => ['required', 'string', 'max:120'],
             'email'    => ['required', 'email', 'max:160', 'unique:users,email'],
@@ -32,7 +40,7 @@ class RegisterController extends Controller
             'name'     => $data['name'],
             'email'    => $data['email'],
             'phone'    => $data['phone'],
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']),
             'role'     => $data['role'],
         ]);
 

@@ -84,7 +84,7 @@ class AnimalController extends Controller
     {
         $this->authorizeShelter($animal);
         $animal->delete();
-        return back()->with('success', 'Data hewan berhasil dipindahkan ke tempat sampah.');
+        return back()->with('success', 'Data hewan berhasil dipindahkan ke arsip.');
     }
 
     public function trash()

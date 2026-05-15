@@ -15,6 +15,13 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
+        // Auto-correct gmail.con typo
+        if ($request->has('email')) {
+            $request->merge([
+                'email' => str_replace('@gmail.con', '@gmail.com', $request->email)
+            ]);
+        }
+
         $credentials = $request->validate([
             'email'    => ['required', 'email'],
             'password' => ['required'],
