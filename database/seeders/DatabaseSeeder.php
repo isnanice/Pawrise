@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'     => 'Sarah Wijaya',
                 'phone'    => '081234567890',
-                'password' => 'password',
+                'password' => bcrypt('password'),
                 'role'     => 'adopter',
                 'address'  => 'Jl. Sudirman No. 1, Jakarta',
                 'bio'      => 'Pencinta hewan, sudah memelihara kucing selama 5 tahun.',
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         // ===== Shelters (sesuai Figma) =====
         $sh1User = User::firstOrCreate(
             ['email' => 'shelter@pawrise.id'],
-            ['name' => 'Admin Shelter Harapan', 'phone' => '081234500000', 'password' => 'password', 'role' => 'shelter']
+            ['name' => 'Admin Shelter Harapan', 'phone' => '081234500000', 'password' => bcrypt('password'), 'role' => 'shelter']
         );
         $shHarapan = Shelter::updateOrCreate(
             ['user_id' => $sh1User->id],
@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
 
         $sh2User = User::firstOrCreate(
             ['email' => 'klinik-sehat@pawrise.id'],
-            ['name' => 'Admin Klinik Hewan Sehat', 'phone' => '082234500000', 'password' => 'password', 'role' => 'shelter']
+            ['name' => 'Admin Klinik Hewan Sehat', 'phone' => '082234500000', 'password' => bcrypt('password'), 'role' => 'shelter']
         );
         $shKlinik = Shelter::updateOrCreate(
             ['user_id' => $sh2User->id],
@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
 
         $sh3User = User::firstOrCreate(
             ['email' => 'paws-rescue@pawrise.id'],
-            ['name' => 'Admin Paws Rescue', 'phone' => '083334500000', 'password' => 'password', 'role' => 'shelter']
+            ['name' => 'Admin Paws Rescue', 'phone' => '083334500000', 'password' => bcrypt('password'), 'role' => 'shelter']
         );
         $shPaws = Shelter::updateOrCreate(
             ['user_id' => $sh3User->id],
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         // ===== Animal photo helper (Unsplash) =====
         $img = fn(string $id) => "https://images.unsplash.com/{$id}?w=600&h=450&fit=crop";
 
-        // ===== Filler animals (20) — diinsert lebih dulu agar yg "starring" muncul paling atas =====
+        // ===== Filler animals (20) =====
         $fillers = [
             ['Bruno','anjing','Golden Retriever',24,22,'jantan','besar', 'photo-1552053831-71594a27632d', $shHarapan],
             ['Mochi','kucing','Persia',8,3,'betina','kecil', 'photo-1514888286974-6c03e2ca1dba', $shHarapan],
@@ -118,8 +118,7 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        // ===== Starring 4 (sesuai Figma) — diinsert TERAKHIR (Milo last) agar Milo dapat ID tertinggi
-        // sehingga sort 'Terbaru' (id DESC) menampilkan: Milo → Luna → Ambatubus → Ireng =====
+        // ===== Starring 4 =====
         $starring = [
             [
                 'code'=>'PAW-021','name'=>'Ireng','species'=>'kucing','breed'=>'Bombay Mix',
