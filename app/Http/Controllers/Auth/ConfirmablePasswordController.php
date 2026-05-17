@@ -9,19 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
+// Controller untuk memvalidasi konfirmasi kata sandi pengguna
 class ConfirmablePasswordController extends Controller
 {
-    /**
-     * Show the confirm password view.
-     */
+    // Menampilkan form konfirmasi kata sandi
     public function show(): View
     {
         return view('auth.confirm-password');
     }
 
-    /**
-     * Confirm the user's password.
-     */
+    // Memvaladasi kata sandi yang dimasukkan pengguna
     public function store(Request $request): RedirectResponse
     {
         if (! Auth::guard('web')->validate([

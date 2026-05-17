@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
+// Controller untuk mengelola konten edukasi oleh admin
 class EdukasiController extends Controller
 {
+    // Menampilkan daftar konten edukasi
     public function index(Request $request)
     {
         $query = KontenEdukasi::latest();
@@ -31,11 +33,13 @@ class EdukasiController extends Controller
         return view('admin.edukasi.index', compact('edukasi'));
     }
 
+    // Menampilkan halaman form pembuatan konten edukasi
     public function create()
     {
         return view('admin.edukasi.create');
     }
 
+    // Menyimpan konten edukasi baru ke database
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -62,11 +66,13 @@ class EdukasiController extends Controller
         return redirect()->route('admin.edukasi.index')->with('success', 'Konten edukasi berhasil dibuat.');
     }
 
+    // Menampilkan halaman form edit konten edukasi
     public function edit(KontenEdukasi $edukasi)
     {
         return view('admin.edukasi.edit', compact('edukasi'));
     }
 
+    // Memperbarui data konten edukasi di database
     public function update(Request $request, KontenEdukasi $edukasi)
     {
         $data = $request->validate([
@@ -100,18 +106,21 @@ class EdukasiController extends Controller
         return redirect()->route('admin.edukasi.index')->with('success', 'Konten edukasi berhasil diperbarui.');
     }
 
+    // Memindahkan konten edukasi ke tempat sampah (soft delete)
     public function destroy(KontenEdukasi $edukasi)
     {
         $edukasi->delete();
         return redirect()->route('admin.edukasi.index')->with('success', 'Konten edukasi berhasil dipindahkan ke tempat sampah.');
     }
 
+    // Menampilkan daftar konten edukasi di tempat sampah
     public function trash()
     {
         $edukasi = KontenEdukasi::onlyTrashed()->latest()->paginate(10);
         return view('admin.edukasi.trash', compact('edukasi'));
     }
 
+    // Memulihkan konten edukasi dari tempat sampah
     public function restore($id)
     {
         $edukasi = KontenEdukasi::withTrashed()->findOrFail($id);
@@ -119,6 +128,7 @@ class EdukasiController extends Controller
         return redirect()->route('admin.edukasi.trash')->with('success', 'Konten edukasi berhasil dipulihkan.');
     }
 
+    // Menghapus konten edukasi secara permanen
     public function forceDelete($id)
     {
         $edukasi = KontenEdukasi::withTrashed()->findOrFail($id);

@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\AdoptionApplication;
 use Illuminate\Http\Request;
 
+// Controller untuk mengelola permohonan adopsi oleh shelter
 class ApplicationController extends Controller
 {
+    // Menampilkan daftar permohonan adopsi hewan
     public function index(Request $request)
     {
         $shelter = auth()->user()->shelter;
@@ -24,6 +26,7 @@ class ApplicationController extends Controller
         return view('shelter.applications.index', compact('apps'));
     }
 
+    // Menampilkan halaman detail permohonan adopsi
     public function show(AdoptionApplication $application)
     {
         $this->authorizeShelter($application);
@@ -31,6 +34,7 @@ class ApplicationController extends Controller
         return view('shelter.applications.show', compact('application'));
     }
 
+    // Menyetujui permohonan adopsi hewan
     public function approve(AdoptionApplication $application)
     {
         $this->authorizeShelter($application);
@@ -39,6 +43,7 @@ class ApplicationController extends Controller
         return back()->with('success', 'Permohonan disetujui.');
     }
 
+    // Menolak permohonan adopsi hewan
     public function reject(Request $request, AdoptionApplication $application)
     {
         $this->authorizeShelter($application);
@@ -49,6 +54,7 @@ class ApplicationController extends Controller
         return back()->with('success', 'Permohonan ditolak.');
     }
 
+    // Memvalidasi apakah permohonan adopsi ditujukan untuk shelter yang bersangkutan
     private function authorizeShelter(AdoptionApplication $application): void
     {
         $shelter = auth()->user()->shelter;

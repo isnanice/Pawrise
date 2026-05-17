@@ -14,21 +14,16 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
+// Controller untuk mengelola pembuatan kata sandi baru
 class NewPasswordController extends Controller
 {
-    /**
-     * Display the password reset view.
-     */
+    // Menampilkan halaman form penyetelan ulang kata sandi
     public function create(Request $request): View
     {
         return view('auth.reset-password', ['request' => $request]);
     }
 
-    /**
-     * Handle an incoming new password request.
-     *
-     * @throws ValidationException
-     */
+    // Memproses pembaharuan kata sandi pengguna yang disetel ulang
     public function store(Request $request): RedirectResponse
     {
         $request->validate([

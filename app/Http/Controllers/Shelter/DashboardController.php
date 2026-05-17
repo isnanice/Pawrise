@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Animal;
 use App\Models\AdoptionApplication;
 
+// Controller untuk dashboard utama shelter
 class DashboardController extends Controller
 {
+    // Menampilkan halaman dashboard shelter beserta statistik data hewan dan permohonan
     public function index()
     {
         $shelter = auth()->user()->shelter;

@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+// Controller untuk mengelola autentikasi login pengguna
 class LoginController extends Controller
 {
+    // Menampilkan halaman form login
     public function show()
     {
         return view('auth.login');
     }
 
+    // Memproses permintaan masuk (login) pengguna
     public function store(Request $request)
     {
         // Auto-correct gmail.con typo

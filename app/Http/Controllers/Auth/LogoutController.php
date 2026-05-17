@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+// Controller untuk mengelola proses keluar (logout) pengguna
 class LogoutController extends Controller
 {
+    // Menampilkan halaman konfirmasi keluar (logout)
     public function show()
     {
         $user = auth()->user();
@@ -20,6 +22,7 @@ class LogoutController extends Controller
         return view('user.logout');
     }
 
+    // Memproses proses keluar dan membersihkan sesi pengguna
     public function destroy(Request $request)
     {
         Auth::logout();

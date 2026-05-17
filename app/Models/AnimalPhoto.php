@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+// Model untuk data foto pendukung hewan
 class AnimalPhoto extends Model
 {
     protected $fillable = ['animal_id', 'photo_path', 'sort_order'];
 
+    // Relasi ke model Animal (hewan pemilik foto)
     public function animal()
     {
         return $this->belongsTo(Animal::class);
     }
 
-    // Helper untuk generate URL foto, support attached_assets & storage
+    // Mendapatkan URL lengkap untuk foto pendukung
     public function photoUrl(): string
     {
         if (!$this->photo_path) return '';

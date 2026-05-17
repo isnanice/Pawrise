@@ -9,21 +9,16 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
+// Controller untuk meminta tautan penyetelan ulang kata sandi
 class PasswordResetLinkController extends Controller
 {
-    /**
-     * Display the password reset link request view.
-     */
+    // Menampilkan halaman form lupa kata sandi
     public function create(): View
     {
         return view('auth.forgot-password');
     }
 
-    /**
-     * Handle an incoming password reset link request.
-     *
-     * @throws ValidationException
-     */
+    // Mengirim tautan penyetelan ulang kata sandi ke email pengguna
     public function store(Request $request): RedirectResponse
     {
         $request->validate([

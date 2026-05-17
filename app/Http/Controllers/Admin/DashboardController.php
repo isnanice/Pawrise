@@ -8,8 +8,10 @@ use App\Models\Shelter;
 use App\Models\KontenEdukasi;
 use App\Models\AdoptionApplication;
 
+// Controller untuk dashboard utama admin
 class DashboardController extends Controller
 {
+    // Menampilkan halaman dashboard admin beserta statistik dan data terbaru
     public function index()
     {
         $stats = [

@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
+// Controller untuk mengelola data hewan oleh shelter
 class AnimalController extends Controller
 {
+    // Menampilkan daftar hewan peliharaan di shelter
     public function index(Request $request)
     {
         $shelter = auth()->user()->shelter;
@@ -34,11 +36,13 @@ class AnimalController extends Controller
         return view('shelter.animals.index', compact('animals'));
     }
 
+    // Menampilkan form tambah data hewan baru
     public function create()
     {
         return view('shelter.animals.create');
     }
 
+    // Menyimpan data hewan baru ke database
     public function store(Request $request)
     {
         $shelter = auth()->user()->shelter;
@@ -57,12 +61,14 @@ class AnimalController extends Controller
         return redirect()->route('shelter.animals.index')->with('success', 'Hewan baru berhasil ditambahkan.');
     }
 
+    // Menampilkan form edit data hewan
     public function edit(Animal $animal)
     {
         $this->authorizeShelter($animal);
         return view('shelter.animals.edit', compact('animal'));
     }
 
+    // Memperbarui data hewan di database
     public function update(Request $request, Animal $animal)
     {
         $this->authorizeShelter($animal);
@@ -80,6 +86,7 @@ class AnimalController extends Controller
         return redirect()->route('shelter.animals.index')->with('success', 'Data hewan berhasil diperbarui.');
     }
 
+    // Mengarsipkan data hewan (soft delete)
     public function destroy(Animal $animal)
     {
         $this->authorizeShelter($animal);
@@ -87,6 +94,7 @@ class AnimalController extends Controller
         return back()->with('success', 'Data hewan berhasil dipindahkan ke arsip.');
     }
 
+    // Menampilkan daftar hewan yang diarsipkan
     public function trash()
     {
         $shelter = auth()->user()->shelter;
@@ -96,6 +104,7 @@ class AnimalController extends Controller
         return view('shelter.animals.trash', compact('animals'));
     }
 
+    // Memulihkan data hewan dari arsip
     public function restore($id)
     {
         $shelter = auth()->user()->shelter;
@@ -104,6 +113,7 @@ class AnimalController extends Controller
         return redirect()->route('shelter.animals.trash')->with('success', 'Data hewan berhasil dipulihkan.');
     }
 
+    // Menghapus data hewan secara permanen
     public function forceDelete($id)
     {
         $shelter = auth()->user()->shelter;
@@ -117,12 +127,14 @@ class AnimalController extends Controller
         return redirect()->route('shelter.animals.trash')->with('success', 'Data hewan berhasil dihapus permanen.');
     }
 
+    // Memvalidasi apakah hewan dimiliki oleh shelter yang bersangkutan
     private function authorizeShelter(Animal $animal): void
     {
         $shelter = auth()->user()->shelter;
         abort_unless($shelter && $animal->shelter_id === $shelter->id, 403);
     }
 
+    // Memvalidasi input request untuk data hewan
     private function validated(Request $request, ?Animal $animal = null): array
     {
         return $request->validate([

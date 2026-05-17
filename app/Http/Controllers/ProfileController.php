@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+// Controller untuk mengelola profil pengguna
 class ProfileController extends Controller
 {
+    // Menampilkan halaman form edit profil
     public function edit()
     {
         return view('user.profile');
     }
 
+    // Memperbarui data profil pengguna
     public function update(Request $request)
     {
         $data = $request->validate([

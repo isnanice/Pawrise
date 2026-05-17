@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Animal;
 
+// Controller untuk menampilkan detail hewan
 class AnimalController extends Controller
 {
+    // Menampilkan halaman detail hewan beserta hewan sejenis
     public function show(Animal $animal)
     {
         $animal->load(['shelter', 'photos']);

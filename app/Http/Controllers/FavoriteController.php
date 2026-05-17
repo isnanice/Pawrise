@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Animal;
 use App\Models\Favorite;
 
+// Controller untuk mengelola hewan favorit pengguna
 class FavoriteController extends Controller
 {
+    // Menambah atau menghapus hewan dari daftar favorit pengguna
     public function toggle(Animal $animal)
     {
         $existing = Favorite::where('user_id', auth()->id())
@@ -26,6 +28,7 @@ class FavoriteController extends Controller
         return back()->with('success', 'Ditambahkan ke favorit.');
     }
 
+    // Menampilkan halaman daftar hewan terfavorit pengguna
     public function index()
     {
         $animals = auth()->user()->favoriteAnimals()

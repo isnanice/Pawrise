@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Animal;
 use Illuminate\Http\Request;
 
+// Controller untuk menampilkan katalog pencarian hewan
 class CatalogController extends Controller
 {
+    // Menampilkan halaman katalog hewan dengan berbagai filter pencarian
     public function index(Request $request)
     {
         $query = Animal::with('shelter')->where('status', '!=', 'diadopsi');

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+// Model untuk data permohonan adopsi hewan
 class AdoptionApplication extends Model
 {
     use SoftDeletes;
@@ -26,17 +27,19 @@ class AdoptionApplication extends Model
         'agreement' => 'boolean', // ← tambahkan, agar cast benar
     ];
 
+    // Relasi ke model Animal (hewan yang ingin diadopsi)
     public function animal()
     {
         return $this->belongsTo(Animal::class)->withTrashed();
     }
 
+    // Relasi ke model User (pembuat permohonan)
     public function user()
     {
         return $this->belongsTo(User::class)->withTrashed();
     }
 
-    // Helper label status untuk tampilan
+    // Mendapatkan label status permohonan dalam bahasa Indonesia
     public function statusLabel(): string
     {
         return match($this->status) {
@@ -47,7 +50,7 @@ class AdoptionApplication extends Model
         };
     }
 
-    // Helper label experience sesuai Figma
+    // Mendapatkan label tingkat pengalaman pemeliharaan hewan
     public function experienceLabel(): string
     {
         return match($this->experience) {

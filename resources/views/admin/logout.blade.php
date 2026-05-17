@@ -8,6 +8,7 @@
 
         <div style="width: 72px; height: 72px; border-radius: 50%; background: var(--pr-orange-light);
                     display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+            <img src="{{ asset('attached_assets/navbar.png') }}" alt="PawRise Logo" style="width: 36px; height: 36px; object-fit: contain;">
         </div>
 
         <h4 class="fw-bold mb-2">Keluar dari PawRise?</h4>

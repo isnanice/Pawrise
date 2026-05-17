@@ -7,8 +7,10 @@ use App\Models\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+// Controller untuk mengelola permohonan adopsi dari pengguna
 class AdoptionController extends Controller
 {
+    // Menampilkan daftar permohonan adopsi milik pengguna yang sedang login
     public function index()
     {
         $apps = AdoptionApplication::with(['animal.shelter'])
@@ -19,12 +21,14 @@ class AdoptionController extends Controller
         return view('user.applications', compact('apps'));
     }
 
+    // Menampilkan form pembuatan permohonan adopsi hewan
     public function create(Animal $animal)
     {
         $animal->load('shelter');
         return view('adoption.create', compact('animal'));
     }
 
+    // Menyimpan data permohonan adopsi baru
     public function store(Request $request, Animal $animal)
     {
         $data = $request->validate([

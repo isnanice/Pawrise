@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
+// Controller untuk pendaftaran akun baru
 class RegisterController extends Controller
 {
+    // Menampilkan halaman form pendaftaran akun
     public function show()
     {
         return view('auth.register');
     }
 
+    // Memproses pendaftaran akun baru
     public function store(Request $request)
     {
         // Auto-correct gmail.con typo

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+// Model untuk konten edukasi tentang hewan peliharaan
 class KontenEdukasi extends Model
 {
     use HasFactory, SoftDeletes;
@@ -32,7 +33,7 @@ class KontenEdukasi extends Model
         'published_at' => 'datetime',
     ];
 
-    // ── Boot ───────────────────────────────────────────────────
+    // Menginisialisasi event boot pada model
     protected static function boot()
     {
         parent::boot();
@@ -44,12 +45,13 @@ class KontenEdukasi extends Model
         });
     }
 
+    // Menggunakan slug untuk pencarian rute
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
-    // ── Accessors ──────────────────────────────────────────────
+    // Aksesor untuk mendapatkan URL lengkap gambar edukasi
     public function getGambarUrlAttribute(): string
     {
         if ($this->gambar) {
@@ -61,6 +63,7 @@ class KontenEdukasi extends Model
         return asset('images/default-article.jpg');
     }
 
+    // Aksesor untuk mendapatkan label kategori edukasi
     public function getKategoriLabelAttribute(): string
     {
         return match ($this->kategori) {
@@ -72,12 +75,13 @@ class KontenEdukasi extends Model
         };
     }
 
-    // ── Scopes ─────────────────────────────────────────────────
+    // Scope query untuk memfilter konten yang sudah diterbitkan
     public function scopePublished($query)
     {
         return $query->where('is_published', true);
     }
 
+    // Scope query untuk memfilter konten berdasarkan kategori
     public function scopeByKategori($query, $kategori)
     {
         return $query->where('kategori', $kategori);

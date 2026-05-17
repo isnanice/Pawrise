@@ -8,11 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
+// Controller untuk mengubah kata sandi pengguna
 class PasswordController extends Controller
 {
-    /**
-     * Update the user's password.
-     */
+    // Memperbarui kata sandi pengguna yang sedang login
     public function update(Request $request): RedirectResponse
     {
         $validated = $request->validateWithBag('updatePassword', [
