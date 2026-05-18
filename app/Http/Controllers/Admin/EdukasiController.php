@@ -54,10 +54,10 @@ class EdukasiController extends Controller
 
         if ($request->hasFile('gambar')) {
             if (config('filesystems.default') === 'cloudinary') {
-                $uploaded = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($request->file('gambar')->getRealPath(), [
+                $uploaded = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::uploadApi()->upload($request->file('gambar')->getRealPath(), [
                     'folder' => 'pawrise/edukasi',
                 ]);
-                $data['gambar'] = $uploaded->getSecurePath();
+                $data['gambar'] = $uploaded['secure_url'];
             } else {
                 $data['gambar'] = $request->file('gambar')->store('edukasi', 'public');
             }
@@ -97,10 +97,10 @@ class EdukasiController extends Controller
                 Storage::disk('public')->delete($edukasi->gambar);
             }
             if (config('filesystems.default') === 'cloudinary') {
-                $uploaded = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($request->file('gambar')->getRealPath(), [
+                $uploaded = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::uploadApi()->upload($request->file('gambar')->getRealPath(), [
                     'folder' => 'pawrise/edukasi',
                 ]);
-                $data['gambar'] = $uploaded->getSecurePath();
+                $data['gambar'] = $uploaded['secure_url'];
             } else {
                 $data['gambar'] = $request->file('gambar')->store('edukasi', 'public');
             }

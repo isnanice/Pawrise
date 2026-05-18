@@ -54,10 +54,10 @@ class AnimalController extends Controller
 
         if ($request->hasFile('main_photo')) {
             if (config('filesystems.default') === 'cloudinary') {
-                $uploaded = Cloudinary::upload($request->file('main_photo')->getRealPath(), [
+                $uploaded = Cloudinary::uploadApi()->upload($request->file('main_photo')->getRealPath(), [
                     'folder' => 'pawrise/animals',
                 ]);
-                $data['main_photo'] = $uploaded->getSecurePath();
+                $data['main_photo'] = $uploaded['secure_url'];
             } else {
                 $data['main_photo'] = $request->file('main_photo')->store('animals', 'public');
             }
@@ -88,10 +88,10 @@ class AnimalController extends Controller
             }
 
             if (config('filesystems.default') === 'cloudinary') {
-                $uploaded = Cloudinary::upload($request->file('main_photo')->getRealPath(), [
+                $uploaded = Cloudinary::uploadApi()->upload($request->file('main_photo')->getRealPath(), [
                     'folder' => 'pawrise/animals',
                 ]);
-                $data['main_photo'] = $uploaded->getSecurePath();
+                $data['main_photo'] = $uploaded['secure_url'];
             } else {
                 $data['main_photo'] = $request->file('main_photo')->store('animals', 'public');
             }

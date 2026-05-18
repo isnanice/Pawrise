@@ -34,10 +34,10 @@ class ProfileController extends Controller
             }
 
             if (config('filesystems.default') === 'cloudinary') {
-                $uploaded = Cloudinary::upload($request->file('photo')->getRealPath(), [
+                $uploaded = Cloudinary::uploadApi()->upload($request->file('photo')->getRealPath(), [
                     'folder' => 'pawrise/avatars',
                 ]);
-                $data['profile_photo'] = $uploaded->getSecurePath();
+                $data['profile_photo'] = $uploaded['secure_url'];
             } else {
                 $data['profile_photo'] = $request->file('photo')->store('avatars', 'public');
             }
