@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Shelter;
 use App\Http\Controllers\Controller;
 use App\Models\Animal;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Validation\Rule;
 
 // Controller untuk mengelola data hewan oleh shelter
@@ -53,7 +53,14 @@ class AnimalController extends Controller
         $data['code'] = $data['code'] ?? 'SHL-' . str_pad(Animal::where('shelter_id', $shelter->id)->count() + 1, 3, '0', STR_PAD_LEFT);
 
         if ($request->hasFile('main_photo')) {
-            $data['main_photo'] = $request->file('main_photo')->store('animals', 'public');
+            if (config('filesystems.default') === 'cloudinary') {
+                $uploaded = Cloudinary::upload($request->file('main_photo')->getRealPath(), [
+                    'folder' => 'pawrise/animals',
+                ]);
+                $data['main_photo'] = $uploaded->getSecurePath();
+            } else {
+                $data['main_photo'] = $request->file('main_photo')->store('animals', 'public');
+            }
         }
 
         Animal::create($data);
@@ -77,9 +84,17 @@ class AnimalController extends Controller
 
         if ($request->hasFile('main_photo')) {
             if ($animal->main_photo && !str_starts_with($animal->main_photo, 'http')) {
-                Storage::disk('public')->delete($animal->main_photo);
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($animal->main_photo);
             }
-            $data['main_photo'] = $request->file('main_photo')->store('animals', 'public');
+
+            if (config('filesystems.default') === 'cloudinary') {
+                $uploaded = Cloudinary::upload($request->file('main_photo')->getRealPath(), [
+                    'folder' => 'pawrise/animals',
+                ]);
+                $data['main_photo'] = $uploaded->getSecurePath();
+            } else {
+                $data['main_photo'] = $request->file('main_photo')->store('animals', 'public');
+            }
         }
 
         $animal->update($data);
@@ -120,7 +135,7 @@ class AnimalController extends Controller
         $animal = Animal::withTrashed()->where('shelter_id', $shelter->id)->findOrFail($id);
 
         if ($animal->main_photo && !str_starts_with($animal->main_photo, 'http')) {
-            Storage::disk('public')->delete($animal->main_photo);
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($animal->main_photo);
         }
 
         $animal->forceDelete();

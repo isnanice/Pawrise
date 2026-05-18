@@ -6,6 +6,8 @@ use App\Http\Controllers\EducationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AdoptionController;
@@ -42,6 +44,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/masuk', [LoginController::class, 'store'])->name('login.store');
     Route::get('/daftar', [RegisterController::class, 'show'])->name('register');
     Route::post('/daftar', [RegisterController::class, 'store'])->name('register.store');
+
+    // Lupa & Atur Ulang Kata Sandi
+    Route::get('/lupa-kata-sandi', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    Route::post('/lupa-kata-sandi', [PasswordResetLinkController::class, 'store'])->name('password.email');
+    Route::get('/atur-ulang-kata-sandi/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('/atur-ulang-kata-sandi', [NewPasswordController::class, 'store'])->name('password.store');
 });
 
 // ============================================================

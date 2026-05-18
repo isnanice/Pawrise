@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="text-end mt-1">
-            <a href="#" class="text-decoration-none" style="color: #A16207; font-size: 0.85rem;">Lupa kata sandi?</a>
+            <a href="{{ route('password.request') }}" class="text-decoration-none" style="color: #A16207; font-size: 0.85rem;">Lupa kata sandi?</a>
         </div>
         <button type="submit" class="btn pr-btn-primary w-100 mt-3" style="font-weight: 600;">Masuk <i class="bi bi-arrow-right ms-1"></i></button>
     </form>
