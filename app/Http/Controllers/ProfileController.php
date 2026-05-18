@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Storage;
 
 // Controller untuk mengelola profil pengguna
 class ProfileController extends Controller
@@ -29,18 +29,10 @@ class ProfileController extends Controller
         $user = $request->user();
 
         if ($request->hasFile('photo')) {
-            if ($user->profile_photo && !str_starts_with($user->profile_photo, 'http')) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->profile_photo);
+            if ($user->profile_photo) {
+                Storage::disk('public')->delete($user->profile_photo);
             }
-
-            if (config('filesystems.default') === 'cloudinary') {
-                $uploaded = Cloudinary::uploadApi()->upload($request->file('photo')->getRealPath(), [
-                    'folder' => 'pawrise/avatars',
-                ]);
-                $data['profile_photo'] = $uploaded['secure_url'];
-            } else {
-                $data['profile_photo'] = $request->file('photo')->store('avatars', 'public');
-            }
+            $data['profile_photo'] = $request->file('photo')->store('avatars', 'public');
         }
 
         unset($data['photo']);

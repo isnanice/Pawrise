@@ -53,14 +53,7 @@ class EdukasiController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            if (config('filesystems.default') === 'cloudinary') {
-                $uploaded = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::uploadApi()->upload($request->file('gambar')->getRealPath(), [
-                    'folder' => 'pawrise/edukasi',
-                ]);
-                $data['gambar'] = $uploaded['secure_url'];
-            } else {
-                $data['gambar'] = $request->file('gambar')->store('edukasi', 'public');
-            }
+            $data['gambar'] = $request->file('gambar')->store('edukasi', 'public');
         }
 
         $data['slug']        = Str::slug($data['judul']);
@@ -93,17 +86,10 @@ class EdukasiController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            if ($edukasi->gambar && !str_starts_with($edukasi->gambar, 'http')) {
+            if ($edukasi->gambar) {
                 Storage::disk('public')->delete($edukasi->gambar);
             }
-            if (config('filesystems.default') === 'cloudinary') {
-                $uploaded = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::uploadApi()->upload($request->file('gambar')->getRealPath(), [
-                    'folder' => 'pawrise/edukasi',
-                ]);
-                $data['gambar'] = $uploaded['secure_url'];
-            } else {
-                $data['gambar'] = $request->file('gambar')->store('edukasi', 'public');
-            }
+            $data['gambar'] = $request->file('gambar')->store('edukasi', 'public');
         }
 
         $data['slug']        = Str::slug($data['judul']);
@@ -146,7 +132,7 @@ class EdukasiController extends Controller
     public function forceDelete($id)
     {
         $edukasi = KontenEdukasi::withTrashed()->findOrFail($id);
-        if ($edukasi->gambar && !str_starts_with($edukasi->gambar, 'http')) {
+        if ($edukasi->gambar) {
             Storage::disk('public')->delete($edukasi->gambar);
         }
         $edukasi->forceDelete();
