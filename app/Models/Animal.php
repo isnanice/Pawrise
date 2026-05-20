@@ -16,12 +16,20 @@ class Animal extends Model
         'shelter_id', 'code', 'name', 'species', 'breed', 'age_months',
         'weight_kg', 'gender', 'size', 'vaccinated', 'sterilized', 'status',
         'description', 'characteristics', 'medical_history', 'main_photo',
+        'vaccinated_distemper', 'dewormed', 'flea_free', 'special_needs',
+        'vaccinated_rabies_date', 'vaccinated_distemper_date',
     ];
 
     protected $casts = [
-        'vaccinated' => 'boolean',
-        'sterilized' => 'boolean',
-        'weight_kg' => 'decimal:2',
+        'vaccinated'              => 'boolean',
+        'vaccinated_distemper'    => 'boolean',
+        'sterilized'              => 'boolean',
+        'dewormed'                => 'boolean',
+        'flea_free'               => 'boolean',
+        'special_needs'           => 'boolean',
+        'weight_kg'               => 'decimal:2',
+        'vaccinated_rabies_date'  => 'date',
+        'vaccinated_distemper_date' => 'date',
     ];
 
     // Relasi ke model Shelter (tempat penampungan hewan)
