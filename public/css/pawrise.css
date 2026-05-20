@@ -915,3 +915,274 @@ a { text-decoration: none; }
     .pr-cat-loc { flex: 1 1 100%; }
     .pr-cat-body { padding: 50px 0 60px; }
 }
+
+/* ================================================================
+   SHELTER ANIMAL FORM — Figma redesign
+   ================================================================ */
+
+/* Section card */
+.pr-form-section {
+    background: #fff;
+    border: 1.5px solid var(--pr-border);
+    border-radius: 16px;
+    padding: 24px 28px;
+}
+.pr-form-section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--pr-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+.pr-form-section-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--pr-orange-light);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .95rem;
+    flex-shrink: 0;
+}
+
+/* Labels, inputs */
+.pr-form-label {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--pr-text-muted);
+    margin-bottom: 6px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.pr-form-input,
+.pr-form-textarea {
+    width: 100%;
+    background: #FAFAFA;
+    border: 1.5px solid var(--pr-border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: .95rem;
+    color: var(--pr-text);
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    font-family: inherit;
+    resize: vertical;
+}
+.pr-form-input:focus,
+.pr-form-textarea:focus {
+    border-color: var(--pr-orange);
+    box-shadow: 0 0 0 3px rgba(240,140,42,.12);
+    background: #fff;
+}
+.pr-form-hint {
+    font-size: .78rem;
+    color: var(--pr-text-muted);
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+/* Custom select */
+.pr-form-select-wrap {
+    position: relative;
+}
+.pr-form-select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #FAFAFA;
+    border: 1.5px solid var(--pr-border);
+    border-radius: 10px;
+    padding: 11px 36px 11px 14px;
+    font-size: .95rem;
+    color: var(--pr-text);
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    font-family: inherit;
+}
+.pr-form-select:focus {
+    border-color: var(--pr-orange);
+    box-shadow: 0 0 0 3px rgba(240,140,42,.12);
+    background: #fff;
+}
+.pr-select-arrow {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--pr-text-muted);
+    font-size: .8rem;
+    pointer-events: none;
+}
+
+/* Gender toggle buttons */
+.pr-gender-group {
+    display: flex;
+    gap: 12px;
+}
+.pr-gender-btn {
+    flex: 1;
+    text-align: center;
+    padding: 11px 0;
+    border: 1.5px solid var(--pr-border);
+    border-radius: 10px;
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--pr-text-muted);
+    cursor: pointer;
+    background: #FAFAFA;
+    transition: all .18s;
+    user-select: none;
+}
+.pr-gender-btn input[type="radio"] {
+    display: none;
+}
+.pr-gender-btn.active,
+.pr-gender-btn:has(input:checked) {
+    border-color: var(--pr-orange);
+    background: var(--pr-orange-light);
+    color: var(--pr-orange-dark);
+}
+.pr-gender-btn:hover:not(.active) {
+    border-color: #d1d5db;
+    background: #f3f4f6;
+}
+
+/* Tag chips */
+.pr-tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 14px;
+    background: #FAFAFA;
+    border: 1.5px solid var(--pr-border);
+    border-radius: 10px;
+}
+.pr-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--pr-border);
+    background: #fff;
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--pr-text);
+    cursor: pointer;
+    transition: all .15s;
+    user-select: none;
+}
+.pr-tag input[type="checkbox"] { display: none; }
+.pr-tag:hover { border-color: var(--pr-orange); color: var(--pr-orange-dark); }
+.pr-tag.selected {
+    background: var(--pr-orange-light);
+    border-color: var(--pr-orange);
+    color: var(--pr-orange-dark);
+    font-weight: 600;
+}
+.pr-tag-add {
+    background: none;
+    border: 1.5px dashed var(--pr-border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--pr-text-muted);
+    cursor: pointer;
+    transition: all .15s;
+}
+.pr-tag-add:hover {
+    border-color: var(--pr-orange);
+    color: var(--pr-orange);
+}
+
+/* Upload zone */
+.pr-upload-zone {
+    border: 2px dashed #C7D2E0;
+    border-radius: 14px;
+    background: #EEF4FB;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: border-color .2s, background .2s;
+    text-align: center;
+    padding: 32px;
+}
+.pr-upload-zone:hover,
+.pr-upload-zone.dragging {
+    border-color: var(--pr-orange);
+    background: var(--pr-orange-light);
+}
+.pr-upload-icon {
+    font-size: 2rem;
+    color: var(--pr-orange);
+    display: block;
+    margin-bottom: 10px;
+}
+.pr-upload-text {
+    color: var(--pr-orange);
+    font-weight: 600;
+    margin-bottom: 2px;
+    font-size: .95rem;
+}
+.pr-upload-hint {
+    color: var(--pr-text-muted);
+    font-size: .8rem;
+    margin: 0;
+}
+.pr-upload-preview {
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+/* Check cards */
+.pr-check-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--pr-border);
+    border-radius: 12px;
+    background: #FAFAFA;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    width: 100%;
+    margin: 0;
+}
+.pr-check-card:hover {
+    border-color: var(--pr-orange);
+    background: var(--pr-orange-light);
+}
+.pr-check-card:has(.pr-check-input:checked) {
+    border-color: var(--pr-orange);
+    background: var(--pr-orange-light);
+}
+.pr-check-input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--pr-orange);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.pr-check-title {
+    font-size: .92rem;
+    font-weight: 600;
+    color: var(--pr-text);
+}
+.pr-check-desc {
+    font-size: .8rem;
+    color: var(--pr-text-muted);
+    margin-top: 2px;
+}
