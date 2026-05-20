@@ -27,11 +27,11 @@
         <div class="mb-2">
             <label class="form-label text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.5px;">MENDAFTAR SEBAGAI</label>
             <div class="pr-role-selector">
-                <label class="pr-role-btn {{ old('role', 'adopter') === 'adopter' ? 'active' : '' }}" onclick="document.getElementById('shelter-fields').style.display='none'; document.querySelectorAll('.pr-role-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                <label class="pr-role-btn {{ old('role', 'adopter') === 'adopter' ? 'active' : '' }}" onclick="document.getElementById('shelter-fields').style.display='none'; document.querySelectorAll('.pr-role-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); document.getElementById('email-input').placeholder='contoh@gmail.com';">
                     <input type="radio" name="role" value="adopter" class="d-none" {{ old('role', 'adopter') === 'adopter' ? 'checked' : '' }}>
                     <i class="bi bi-person-fill"></i> Calon Adopter
                 </label>
-                <label class="pr-role-btn {{ old('role') === 'shelter' ? 'active' : '' }}" onclick="document.getElementById('shelter-fields').style.display='block'; document.querySelectorAll('.pr-role-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                <label class="pr-role-btn {{ old('role') === 'shelter' ? 'active' : '' }}" onclick="document.getElementById('shelter-fields').style.display='block'; document.querySelectorAll('.pr-role-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); document.getElementById('email-input').placeholder='contoh@pawrise.id';">
                     <input type="radio" name="role" value="shelter" class="d-none" {{ old('role') === 'shelter' ? 'checked' : '' }}>
                     <i class="bi bi-house-door"></i> Shelter/Rescue
                 </label>
@@ -44,11 +44,11 @@
         </div>
         <div>
             <label class="form-label fw-bold" style="font-size: 0.85rem;">Alamat Email</label>
-            <input type="email" name="email" value="{{ old('email') }}" class="form-control" style="background: #F8FAFC;" placeholder="contoh@email.com" required>
+            <input type="email" name="email" id="email-input" value="{{ old('email') }}" class="form-control" style="background: #F8FAFC;" placeholder="{{ old('role') === 'shelter' ? 'contoh@pawrise.id' : 'contoh@gmail.com' }}" required>
         </div>
         <div>
             <label class="form-label fw-bold" style="font-size: 0.85rem;">Nomor Telepon</label>
-            <input type="text" name="phone" value="{{ old('phone') }}" class="form-control" style="background: #F8FAFC;" placeholder="+62 812 3456 7890" required>
+            <input type="tel" name="phone" value="{{ old('phone') }}" class="form-control" style="background: #F8FAFC;" placeholder="+62 812 3456 7890" required oninput="this.value = this.value.replace(/[^0-9+]/g, '')">
         </div>
 
         <div id="shelter-fields" style="display: {{ old('role') === 'shelter' ? 'block' : 'none' }};">

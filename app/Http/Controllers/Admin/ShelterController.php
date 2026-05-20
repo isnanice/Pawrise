@@ -58,4 +58,24 @@ class ShelterController extends Controller
         $shelter->delete();
         return redirect()->route('admin.shelters.index')->with('success', 'Data shelter berhasil dihapus (soft delete).');
     }
+
+    public function trash()
+    {
+        $shelters = Shelter::onlyTrashed()->with('user')->latest()->paginate(10);
+        return view('admin.shelters.trash', compact('shelters'));
+    }
+
+    public function restore($id)
+    {
+        $shelter = Shelter::onlyTrashed()->findOrFail($id);
+        $shelter->restore();
+        return redirect()->route('admin.shelters.trash')->with('success', 'Data shelter berhasil dipulihkan.');
+    }
+
+    public function forceDelete($id)
+    {
+        $shelter = Shelter::onlyTrashed()->findOrFail($id);
+        $shelter->forceDelete();
+        return redirect()->route('admin.shelters.trash')->with('success', 'Data shelter dihapus permanen.');
+    }
 }

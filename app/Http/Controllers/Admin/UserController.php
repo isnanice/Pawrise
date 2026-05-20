@@ -45,4 +45,24 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'Akun pengguna berhasil dihapus.');
     }
+
+    public function trash()
+    {
+        $users = User::onlyTrashed()->where('role', 'adopter')->latest()->paginate(10);
+        return view('admin.users.trash', compact('users'));
+    }
+
+    public function restore($id)
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->restore();
+        return redirect()->route('admin.users.trash')->with('success', 'Data pengguna berhasil dipulihkan.');
+    }
+
+    public function forceDelete($id)
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->forceDelete();
+        return redirect()->route('admin.users.trash')->with('success', 'Data pengguna dihapus permanen.');
+    }
 }

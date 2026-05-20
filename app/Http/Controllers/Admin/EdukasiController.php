@@ -56,10 +56,23 @@ class EdukasiController extends Controller
             $data['gambar'] = $request->file('gambar')->store('edukasi', 'public');
         }
 
-        $data['slug']        = Str::slug($data['judul']);
+        $slug = Str::slug($data['judul']);
+        $originalSlug = $slug;
+        $count = 1;
+        while (KontenEdukasi::where('slug', $slug)->exists()) {
+            $slug = "{$originalSlug}-{$count}";
+            $count++;
+        }
+        $data['slug'] = $slug;
+
         $data['admin_id']    = auth()->id();
         $data['is_published'] = $request->boolean('is_published');
         $data['published_at'] = $data['is_published'] ? now() : null;
+
+        if (empty($data['estimasi_baca'])) {
+            $wordCount = str_word_count(strip_tags($data['konten']));
+            $data['estimasi_baca'] = max(1, (int) ceil($wordCount / 200));
+        }
 
         KontenEdukasi::create($data);
 
@@ -92,13 +105,26 @@ class EdukasiController extends Controller
             $data['gambar'] = $request->file('gambar')->store('edukasi', 'public');
         }
 
-        $data['slug']        = Str::slug($data['judul']);
+        $slug = Str::slug($data['judul']);
+        $originalSlug = $slug;
+        $count = 1;
+        while (KontenEdukasi::where('slug', $slug)->where('id', '!=', $edukasi->id)->exists()) {
+            $slug = "{$originalSlug}-{$count}";
+            $count++;
+        }
+        $data['slug']        = $slug;
+
         $data['is_published'] = $request->boolean('is_published');
 
         if ($data['is_published'] && ! $edukasi->published_at) {
             $data['published_at'] = now();
         } elseif (! $data['is_published']) {
             $data['published_at'] = null;
+        }
+
+        if (empty($data['estimasi_baca'])) {
+            $wordCount = str_word_count(strip_tags($data['konten']));
+            $data['estimasi_baca'] = max(1, (int) ceil($wordCount / 200));
         }
 
         $edukasi->update($data);
@@ -110,7 +136,7 @@ class EdukasiController extends Controller
     public function destroy(KontenEdukasi $edukasi)
     {
         $edukasi->delete();
-        return redirect()->route('admin.edukasi.index')->with('success', 'Konten edukasi berhasil dipindahkan ke tempat sampah.');
+        return redirect()->route('admin.edukasi.index')->with('success', 'Konten edukasi berhasil dipindahkan ke Arsip.');
     }
 
     // Menampilkan daftar konten edukasi di tempat sampah

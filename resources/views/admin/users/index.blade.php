@@ -102,6 +102,9 @@
         <h3 class="fw-bold mb-0">Kelola Data Pengguna</h3>
         <p class="daftar-subtitle">Kelola seluruh akun pengguna (adopter) di sistem PawRise</p>
     </div>
+    <a href="{{ route('admin.users.trash') }}" class="btn btn-secondary d-inline-flex align-items-center gap-2" style="background: #f3f4f6; color: #6b7280; font-weight: 700; font-size: .88rem; padding: 10px 20px; border-radius: 10px; border: 1.5px solid #e5e7eb; text-decoration: none; white-space: nowrap; transition: all .15s;" onmouseover="this.style.background='#e5e7eb'; this.style.color='var(--pr-text)';" onmouseout="this.style.background='#f3f4f6'; this.style.color='#6b7280';">
+        <i class="bi bi-archive"></i> Arsip
+    </a>
 </div>
 
 @if(session('success'))

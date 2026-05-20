@@ -107,11 +107,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
 
     // Kelola Pengguna
+    Route::get('/pengguna/trash', [AdminUserController::class, 'trash'])->name('users.trash');
+    Route::post('/pengguna/{id}/restore', [AdminUserController::class, 'restore'])->name('users.restore');
+    Route::delete('/pengguna/{id}/force-delete', [AdminUserController::class, 'forceDelete'])->name('users.force-delete');
     Route::get('/pengguna', [AdminUserController::class, 'index'])->name('users.index');
     Route::get('/pengguna/{user}', [AdminUserController::class, 'show'])->name('users.show');
     Route::delete('/pengguna/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 
     // Verifikasi Shelter
+    Route::get('/shelter/trash', [AdminShelterController::class, 'trash'])->name('shelters.trash');
+    Route::post('/shelter/{id}/restore', [AdminShelterController::class, 'restore'])->name('shelters.restore');
+    Route::delete('/shelter/{id}/force-delete', [AdminShelterController::class, 'forceDelete'])->name('shelters.force-delete');
     Route::get('/shelter', [AdminShelterController::class, 'index'])->name('shelters.index');
     Route::get('/shelter/{shelter}', [AdminShelterController::class, 'show'])->name('shelters.show');
     Route::post('/shelter/{shelter}/verifikasi', [AdminShelterController::class, 'verify'])->name('shelters.verify');

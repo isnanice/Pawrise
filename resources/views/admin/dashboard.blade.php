@@ -82,11 +82,6 @@
             Berikut adalah ringkasan keseluruhan sistem PawRise.
         </p>
     </div>
-    <a href="{{ route('admin.edukasi.create') }}"
-       class="btn pr-btn-primary d-inline-flex align-items-center gap-2"
-       style="border-radius: 12px; padding: 10px 20px;">
-        <i class="bi bi-plus-lg"></i> Tambah Konten Edukasi
-    </a>
 </div>
 
 {{-- Stat Cards --}}
