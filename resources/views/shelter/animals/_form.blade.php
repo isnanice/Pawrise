@@ -198,26 +198,46 @@
     </div>
 
     <div class="row g-3 mt-1">
+
+        {{-- Vaksinasi Rabies --}}
         <div class="col-md-6">
-            <label class="pr-check-card">
+            <label class="pr-check-card" onclick="toggleDate(event,'date-rabies')">
                 <input type="checkbox" name="vaccinated" value="1" class="pr-check-input"
                        id="vac" {{ old('vaccinated', $animal->vaccinated ?? false) ? 'checked' : '' }}>
-                <div>
+                <div class="flex-grow-1">
                     <div class="pr-check-title">Vaksinasi Rabies</div>
                     <div class="pr-check-desc">Terakhir dilakukan dalam 1 tahun terakhir.</div>
+                    <div id="date-rabies"
+                         class="pr-date-field {{ old('vaccinated', $animal->vaccinated ?? false) ? '' : 'd-none' }}"
+                         onclick="event.stopPropagation()">
+                        <label class="pr-date-label">Tanggal Terakhir</label>
+                        <input type="date" name="vaccinated_rabies_date" class="pr-date-input"
+                               value="{{ old('vaccinated_rabies_date', isset($animal->vaccinated_rabies_date) ? $animal->vaccinated_rabies_date->format('Y-m-d') : '') }}">
+                    </div>
                 </div>
             </label>
         </div>
+
+        {{-- Vaksinasi Distemper --}}
         <div class="col-md-6">
-            <label class="pr-check-card">
+            <label class="pr-check-card" onclick="toggleDate(event,'date-distemper')">
                 <input type="checkbox" name="vaccinated_distemper" value="1" class="pr-check-input"
-                       {{ old('vaccinated_distemper', false) ? 'checked' : '' }}>
-                <div>
+                       {{ old('vaccinated_distemper', $animal->vaccinated_distemper ?? false) ? 'checked' : '' }}>
+                <div class="flex-grow-1">
                     <div class="pr-check-title">Vaksinasi Distemper/Parvo</div>
                     <div class="pr-check-desc">Terakhir dilakukan dalam 1 tahun terakhir.</div>
+                    <div id="date-distemper"
+                         class="pr-date-field {{ old('vaccinated_distemper', $animal->vaccinated_distemper ?? false) ? '' : 'd-none' }}"
+                         onclick="event.stopPropagation()">
+                        <label class="pr-date-label">Tanggal Terakhir</label>
+                        <input type="date" name="vaccinated_distemper_date" class="pr-date-input"
+                               value="{{ old('vaccinated_distemper_date', isset($animal->vaccinated_distemper_date) ? $animal->vaccinated_distemper_date->format('Y-m-d') : '') }}">
+                    </div>
                 </div>
             </label>
         </div>
+
+        {{-- Sudah Disteril --}}
         <div class="col-md-6">
             <label class="pr-check-card">
                 <input type="checkbox" name="sterilized" value="1" class="pr-check-input"
@@ -228,16 +248,19 @@
                 </div>
             </label>
         </div>
+
+        {{-- Pengobatan Cacing --}}
         <div class="col-md-6">
             <label class="pr-check-card">
                 <input type="checkbox" name="dewormed" value="1" class="pr-check-input"
-                       {{ old('dewormed', false) ? 'checked' : '' }}>
+                       {{ old('dewormed', $animal->dewormed ?? false) ? 'checked' : '' }}>
                 <div>
                     <div class="pr-check-title">Pengobatan Cacing Rutin</div>
                     <div class="pr-check-desc">Mendapatkan obat cacing secara berkala.</div>
                 </div>
             </label>
         </div>
+
     </div>
 </div>
 
@@ -298,6 +321,18 @@
 
 @push('scripts')
 <script>
+// ── Toggle tanggal vaksin ──
+function toggleDate(e, id) {
+    const cb = e.currentTarget.querySelector('input[type="checkbox"]');
+    const dateBox = document.getElementById(id);
+    if (!dateBox) return;
+    // setTimeout biar checkbox state sudah update
+    setTimeout(() => {
+        dateBox.classList.toggle('d-none', !cb.checked);
+        if (!cb.checked) dateBox.querySelector('input[type="date"]').value = '';
+    }, 0);
+}
+
 // ── Upload photo preview ──
 const input = document.getElementById('main_photo_input');
 const zone  = document.getElementById('upload-zone');

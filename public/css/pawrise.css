@@ -1186,3 +1186,35 @@ a { text-decoration: none; }
     color: var(--pr-text-muted);
     margin-top: 2px;
 }
+
+/* Date field inside check-card */
+.pr-date-field {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--pr-border);
+}
+.pr-date-label {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--pr-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    display: block;
+    margin-bottom: 5px;
+}
+.pr-date-input {
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid var(--pr-border);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: .88rem;
+    color: var(--pr-text);
+    font-family: inherit;
+    outline: none;
+    transition: border-color .2s;
+}
+.pr-date-input:focus {
+    border-color: var(--pr-orange);
+    box-shadow: 0 0 0 3px rgba(240,140,42,.1);
+}

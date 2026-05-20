@@ -154,11 +154,35 @@
             </p>
 
             {{-- Riwayat Medis --}}
-            @if($animal->medical_history)
+            @php
+                $medisList = [];
+                if ($animal->vaccinated) {
+                    $tgl = $animal->vaccinated_rabies_date ? $animal->vaccinated_rabies_date->translatedFormat('M Y') : null;
+                    $medisList[] = ['label' => 'Vaksinasi Rabies', 'note' => $tgl ? 'Terakhir: ' . $tgl : null];
+                }
+                if (!empty($animal->vaccinated_distemper)) {
+                    $tgl2 = $animal->vaccinated_distemper_date ? $animal->vaccinated_distemper_date->translatedFormat('M Y') : null;
+                    $medisList[] = ['label' => 'Vaksinasi Distemper/Parvo', 'note' => $tgl2 ? 'Terakhir: ' . $tgl2 : null];
+                }
+                if ($animal->sterilized)  $medisList[] = ['label' => 'Sudah disteril', 'note' => null];
+                if (!empty($animal->dewormed)) $medisList[] = ['label' => 'Pengobatan cacing rutin', 'note' => null];
+                // fallback: jika ada medical_history teks lama
+                $extraMedis = [];
+                if ($animal->medical_history) {
+                    $extraMedis = array_filter(array_map('trim', explode("\n", $animal->medical_history)));
+                }
+            @endphp
+            @if(count($medisList) || count($extraMedis))
             <h5 class="fw-bold mt-4 mb-3">Riwayat Medis</h5>
-            @foreach(array_filter(array_map('trim', explode("\n", $animal->medical_history))) as $item)
+            @foreach($medisList as $m)
             <div class="medis-item">
-                <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);"></i>
+                <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);font-size:1.05rem;"></i>
+                <span>{{ $m['label'] }}@if($m['note']) <span style="color:var(--pr-text-muted);font-size:.88rem;">({{ $m['note'] }})</span>@endif</span>
+            </div>
+            @endforeach
+            @foreach($extraMedis as $item)
+            <div class="medis-item">
+                <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);font-size:1.05rem;"></i>
                 <span>{{ $item }}</span>
             </div>
             @endforeach
