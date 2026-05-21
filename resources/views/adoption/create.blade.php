@@ -102,7 +102,15 @@
                     </div>
                 @endif
  
-                <form method="POST" action="{{ route('adoption.store', $animal) }}">
+                @if($draft)
+                <div class="alert mb-4 d-flex align-items-center gap-2"
+                     style="background:#FFF7ED; border:1px solid #FED7AA; border-radius:12px; color:#92400E; font-size:.88rem;">
+                    <i class="bi bi-floppy-fill" style="color:var(--pr-orange);"></i>
+                    <span>Anda memiliki <strong>draft tersimpan</strong> untuk hewan ini. Data di bawah sudah diisi dari draft tersebut.</span>
+                </div>
+                @endif
+
+                <form method="POST" action="{{ route('adoption.store', $animal) }}" id="adoptionForm">
                     @csrf
  
                     {{-- ---- Bagian 1: Data Pribadi ---- --}}
@@ -122,7 +130,7 @@
                             </label>
                             <input type="text"
                                    name="full_name"
-                                   value="{{ old('full_name', auth()->user()->name) }}"
+                                   value="{{ old('full_name', $draft->full_name ?? auth()->user()->name) }}"
                                    placeholder="Masukkan nama sesuai KTP"
                                    class="form-control @error('full_name') is-invalid @enderror"
                                    required>
@@ -136,7 +144,7 @@
                             </label>
                             <input type="text"
                                    name="whatsapp"
-                                   value="{{ old('whatsapp', auth()->user()->phone ?? '') }}"
+                                   value="{{ old('whatsapp', $draft->whatsapp ?? auth()->user()->phone ?? '') }}"
                                    placeholder="Contoh: 08123456789"
                                    class="form-control @error('whatsapp') is-invalid @enderror"
                                    required>
@@ -150,7 +158,7 @@
                             </label>
                             <input type="email"
                                    name="email"
-                                   value="{{ old('email', auth()->user()->email) }}"
+                                   value="{{ old('email', $draft->email ?? auth()->user()->email) }}"
                                    placeholder="budi@example.com"
                                    class="form-control @error('email') is-invalid @enderror"
                                    required>
@@ -166,7 +174,7 @@
                                       rows="3"
                                       placeholder="Masukkan alamat lengkap beserta RT/RW dan kodepos"
                                       class="form-control @error('address') is-invalid @enderror"
-                                      required>{{ old('address', auth()->user()->address ?? '') }}</textarea>
+                                      required>{{ old('address', $draft->address ?? auth()->user()->address ?? '') }}</textarea>
                             @error('address')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
@@ -191,7 +199,7 @@
                                   rows="5"
                                   placeholder="Saya ingin mengadopsi karena..."
                                   class="form-control @error('reason') is-invalid @enderror"
-                                  required>{{ old('reason') }}</textarea>
+                                  required>{{ old('reason', $draft->reason ?? '') }}</textarea>
                         @error('reason')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
  
@@ -220,7 +228,7 @@
                                 </button>
                             @endforeach
                         </div>
-                        <input type="hidden" name="experience" id="experienceInput" value="{{ old('experience', '') }}" required>
+                        <input type="hidden" name="experience" id="experienceInput" value="{{ old('experience', $draft->experience ?? '') }}" required>
                         @error('experience')<div class="text-danger mt-1" style="font-size:.85rem;">{{ $message }}</div>@enderror
                     </div>
  
@@ -257,16 +265,30 @@
  
                     {{-- Action buttons --}}
                     <div class="d-flex align-items-center justify-content-end gap-3 pt-2">
-                        <a href="{{ route('animals.show', $animal) }}"
-                           class="text-decoration-none fw-semibold"
-                           style="color: var(--pr-text-muted); font-size:.95rem;">
-                            Simpan Draft
-                        </a>
-                        <button type="submit" class="pr-btn-primary d-inline-flex align-items-center gap-2 px-4 py-3" style="border-radius: 14px; font-size:.95rem;">
+
+                        <button type="button" id="btnSimpanDraft"
+                                class="btn btn-link p-0 text-decoration-none fw-semibold"
+                                style="color: var(--pr-text-muted); font-size:.95rem;">
+                            <i class="bi bi-floppy me-1"></i> Simpan Draft
+                        </button>
+
+                        <button type="submit" class="pr-btn-primary d-inline-flex align-items-center gap-2 px-4 py-3"
+                                style="border-radius: 14px; font-size:.95rem;">
                             Ajukan Permohonan <i class="bi bi-send-fill"></i>
                         </button>
                     </div>
- 
+
+                </form>
+
+                {{-- Form draft di LUAR adoptionForm agar tidak nested --}}
+                <form method="POST" action="{{ route('adoption.draft', $animal) }}" id="draftForm" style="display:none;">
+                    @csrf
+                    <input type="hidden" name="full_name"  id="draft_full_name">
+                    <input type="hidden" name="whatsapp"   id="draft_whatsapp">
+                    <input type="hidden" name="email"      id="draft_email">
+                    <input type="hidden" name="address"    id="draft_address">
+                    <input type="hidden" name="reason"     id="draft_reason">
+                    <input type="hidden" name="experience" id="draft_experience">
                 </form>
             </div>
         </div>
@@ -307,7 +329,18 @@ document.addEventListener('DOMContentLoaded', function () {
             Object.assign(this.style, activeStyle);
         });
     });
+
+    // Tombol Simpan Draft: salin data form ke draftForm lalu submit
+    document.getElementById('btnSimpanDraft').addEventListener('click', function () {
+        document.getElementById('draft_full_name').value  = document.querySelector('#adoptionForm [name="full_name"]').value;
+        document.getElementById('draft_whatsapp').value   = document.querySelector('#adoptionForm [name="whatsapp"]').value;
+        document.getElementById('draft_email').value      = document.querySelector('#adoptionForm [name="email"]').value;
+        document.getElementById('draft_address').value    = document.querySelector('#adoptionForm [name="address"]').value;
+        document.getElementById('draft_reason').value     = document.querySelector('#adoptionForm [name="reason"]').value;
+        document.getElementById('draft_experience').value = document.getElementById('experienceInput').value;
+        document.getElementById('draftForm').submit();
+    });
 });
 </script>
- 
+
 @endsection
