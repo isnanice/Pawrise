@@ -5,7 +5,7 @@
 <style>
     .detail-photo-main {
         width: 100%;
-        aspect-ratio: 4 / 3.5;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
         border-radius: 18px;
         display: block;
