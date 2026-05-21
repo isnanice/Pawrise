@@ -70,6 +70,7 @@ Route::middleware(['auth', 'role:adopter'])->group(function () {
     Route::post('/favorit/{animal}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
     Route::get('/adopsi/{animal}', [AdoptionController::class, 'create'])->name('adoption.create');
     Route::post('/adopsi/{animal}', [AdoptionController::class, 'store'])->name('adoption.store');
+    Route::post('/adopsi/{animal}/draft', [AdoptionController::class, 'saveDraft'])->name('adoption.draft');
 
     Route::prefix('akun')->name('user.')->group(function () {
         Route::get('/profil', [ProfileController::class, 'edit'])->name('profile');

@@ -43,6 +43,12 @@
         background: #991B1B;
         color: #fff;
     }
+
+    .badge-draft {
+        background: #F3F4F6;
+        color: #374151;
+        border: 1px solid #D1D5DB;
+    }
 </style>
 
 <h3 class="fw-bold mb-1">Status Adopsi</h3>
@@ -80,10 +86,12 @@
                 <span class="app-status-badge
                         @if($app->status === 'disetujui') badge-disetujui
                         @elseif($app->status === 'ditolak') badge-ditolak
+                        @elseif($app->status === 'draft') badge-draft
                         @else badge-menunggu
                         @endif">
                     @if($app->status === 'disetujui') ✓ Disetujui
                     @elseif($app->status === 'ditolak') ✕ Ditolak
+                    @elseif($app->status === 'draft') 📝 Draft
                     @else ⏳ Menunggu
                     @endif
                 </span>
@@ -97,6 +105,8 @@
                 Pengajuan Anda telah disetujui oleh shelter. Silakan jadwalkan penjemputan.
                 @elseif($app->status === 'ditolak')
                 Sayangnya pengajuan Anda tidak dapat diizinkan saat ini karena lingkungan tempat tinggal tidak memenuhi kriteria khusus {{ $app->animal->name }}.
+                @elseif($app->status === 'draft')
+                Draft tersimpan. Lanjutkan dan ajukan permohonan kapan saja.
                 @else
                 Dokumen sedang ditinjau. Tim kami akan menghubungi Anda dalam 1-2 hari kerja untuk wawancara singkat.
                 @endif
@@ -121,6 +131,12 @@
                 class="btn btn-sm pr-btn-primary"
                 style="border-radius: 10px; font-size: .85rem; padding: 6px 18px;">
                 Lihat Hewan Lain
+            </a>
+            @elseif($app->status === 'draft')
+            <a href="{{ route('adoption.create', $app->animal) }}"
+                class="btn btn-sm pr-btn-primary"
+                style="border-radius: 10px; font-size: .85rem; padding: 6px 18px;">
+                <i class="bi bi-pencil me-1"></i> Lanjutkan Draft
             </a>
             @else
             <a href="{{ route('animals.show', $app->animal) }}"

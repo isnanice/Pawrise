@@ -6,7 +6,7 @@
         </a>
 
         <div class="d-flex align-items-center gap-3">
-            <a href="#" class="text-dark"><i class="bi bi-bell" style="font-size:1.2rem"></i></a>
+            <a href="{{ route('shelter.applications.index') }}" class="text-dark"><i class="bi bi-bell" style="font-size:1.2rem"></i></a>
             <span class="text-muted">|</span>
             <div class="dropdown">
                 <a class="d-inline-flex align-items-center gap-2 text-decoration-none text-dark" data-bs-toggle="dropdown" href="#" role="button">
