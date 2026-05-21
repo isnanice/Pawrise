@@ -60,6 +60,10 @@
 <div class="alert alert-success mb-4">{{ session('success') }}</div>
 @endif
 
+@if(session('error'))
+<div class="alert alert-danger mb-4">{{ session('error') }}</div>
+@endif
+
 @if($apps->count())
 <div class="d-flex flex-column gap-3">
     @foreach($apps as $app)

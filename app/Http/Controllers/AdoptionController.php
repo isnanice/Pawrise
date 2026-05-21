@@ -26,6 +26,17 @@ class AdoptionController extends Controller
     {
         $animal->load('shelter');
 
+        // Cek apakah sudah ada permohonan aktif
+        $activeApp = AdoptionApplication::where('user_id', auth()->id())
+            ->where('animal_id', $animal->id)
+            ->whereIn('status', ['menunggu', 'disetujui'])
+            ->first();
+
+        if ($activeApp) {
+            return redirect()->route('user.applications')
+                ->with('error', 'Anda sudah memiliki permohonan aktif untuk hewan ini.');
+        }
+
         // Cek apakah ada draft tersimpan untuk hewan ini
         $draft = AdoptionApplication::where('user_id', auth()->id())
             ->where('animal_id', $animal->id)
@@ -39,6 +50,16 @@ class AdoptionController extends Controller
     // Menyimpan permohonan sebagai draft (belum diajukan)
     public function saveDraft(Request $request, Animal $animal)
     {
+        // Cek apakah sudah ada permohonan aktif
+        $activeApp = AdoptionApplication::where('user_id', auth()->id())
+            ->where('animal_id', $animal->id)
+            ->whereIn('status', ['menunggu', 'disetujui'])
+            ->first();
+
+        if ($activeApp) {
+            return redirect()->route('user.applications')
+                ->with('error', 'Anda sudah memiliki permohonan aktif untuk hewan ini.');
+        }
         $data = $request->validate([
             'full_name'  => ['nullable', 'string', 'max:160'],
             'whatsapp'   => ['nullable', 'string', 'max:30'],
@@ -73,6 +94,16 @@ class AdoptionController extends Controller
     // Menyimpan data permohonan adopsi dan mengajukannya
     public function store(Request $request, Animal $animal)
     {
+        // Cek apakah sudah ada permohonan aktif
+        $activeApp = AdoptionApplication::where('user_id', auth()->id())
+            ->where('animal_id', $animal->id)
+            ->whereIn('status', ['menunggu', 'disetujui'])
+            ->first();
+
+        if ($activeApp) {
+            return redirect()->route('user.applications')
+                ->with('error', 'Anda sudah memiliki permohonan aktif untuk hewan ini.');
+        }
         $data = $request->validate([
             'full_name'  => ['required', 'string', 'max:160'],
             'whatsapp'   => ['required', 'string', 'max:30'],
