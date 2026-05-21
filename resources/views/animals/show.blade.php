@@ -156,20 +156,23 @@
             {{-- Riwayat Medis --}}
             @php
             $medisList = [];
-            if ($animal->vaccinated && $animal->vaccinated_rabies_date) {
-            $tgl = $animal->vaccinated_rabies_date->translatedFormat('M Y');
-            $medisList[] = ['label' => 'Vaksin Rabies', 'note' => 'Terakhir: ' . $tgl];
+            if (!empty($animal->vaccinated)) {
+                $tgl = $animal->vaccinated_rabies_date ? $animal->vaccinated_rabies_date->translatedFormat('M Y') : null;
+                $medisList[] = ['label' => 'Vaksin Rabies', 'note' => $tgl ? 'Terakhir: ' . $tgl : null];
             }
             if (!empty($animal->vaccinated_distemper)) {
-            $tgl2 = $animal->vaccinated_distemper_date ? $animal->vaccinated_distemper_date->translatedFormat('M Y') : null;
-            $medisList[] = ['label' => 'Vaksinasi Distemper/Parvo', 'note' => $tgl2 ? 'Terakhir: ' . $tgl2 : null];
+                $tgl2 = $animal->vaccinated_distemper_date ? $animal->vaccinated_distemper_date->translatedFormat('M Y') : null;
+                $medisList[] = ['label' => 'Vaksinasi Distemper/Parvo', 'note' => $tgl2 ? 'Terakhir: ' . $tgl2 : null];
             }
-            if ($animal->sterilized) $medisList[] = ['label' => 'Sudah disteril', 'note' => null];
+            if (!empty($animal->sterilized)) $medisList[] = ['label' => 'Sudah disteril', 'note' => null];
             if (!empty($animal->dewormed)) $medisList[] = ['label' => 'Pengobatan cacing rutin', 'note' => null];
+            if (!empty($animal->flea_free)) $medisList[] = ['label' => 'Bebas Kutu & Cacing', 'note' => null];
+            if (!empty($animal->special_needs)) $medisList[] = ['label' => 'Berkebutuhan Khusus', 'note' => null];
+
             // fallback: jika ada medical_history teks lama
             $extraMedis = [];
-            if ($animal->medical_history) {
-            $extraMedis = array_filter(array_map('trim', explode("\n", $animal->medical_history)));
+            if (!empty($animal->medical_history)) {
+                $extraMedis = array_filter(array_map('trim', explode("\n", $animal->medical_history)));
             }
             @endphp
             @if(count($medisList) || count($extraMedis))
