@@ -56,4 +56,16 @@ class AdoptionController extends Controller
 
         return redirect()->route('user.applications')->with('success', 'Permohonan adopsi berhasil dikirim.');
     }
+
+    // Menampilkan detail permohonan adopsi untuk adopter
+    public function show(AdoptionApplication $application)
+    {
+        // Pastikan hanya pemilik permohonan yang bisa melihat
+        if ($application->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $application->load('animal.shelter');
+        return view('user.application_show', compact('application'));
+    }
 }

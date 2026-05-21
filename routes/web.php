@@ -75,6 +75,7 @@ Route::middleware(['auth', 'role:adopter'])->group(function () {
         Route::get('/profil', [ProfileController::class, 'edit'])->name('profile');
         Route::post('/profil', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/permohonan-saya', [AdoptionController::class, 'index'])->name('applications');
+        Route::get('/permohonan-saya/{application}', [AdoptionController::class, 'show'])->name('applications.show');
         Route::get('/favorit', [FavoriteController::class, 'index'])->name('favorites');
     });
 });

@@ -123,7 +123,7 @@
                 Lihat Hewan Lain
             </a>
             @else
-            <a href="{{ route('animals.show', $app->animal) }}"
+            <a href="{{ route('user.applications.show', $app) }}"
                 class="btn btn-sm pr-btn-primary"
                 style="border-radius: 10px; font-size: .85rem; padding: 6px 18px;">
                 Cek Detail
