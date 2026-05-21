@@ -134,10 +134,9 @@ class AnimalController extends Controller
         abort_unless($shelter && $animal->shelter_id === $shelter->id, 403);
     }
 
-    // Memvalidasi input request untuk data hewan
     private function validated(Request $request, ?Animal $animal = null): array
     {
-        return $request->validate([
+        $data = $request->validate([
             'code'        => ['nullable', 'string', 'max:20'],
             'name'        => ['required', 'string', 'max:120'],
             'species'     => ['required', Rule::in(['anjing', 'kucing', 'lainnya'])],
@@ -146,13 +145,23 @@ class AnimalController extends Controller
             'weight_kg'   => ['nullable', 'numeric', 'min:0', 'max:200'],
             'gender'      => ['required', Rule::in(['jantan', 'betina'])],
             'size'        => ['required', Rule::in(['kecil', 'sedang', 'besar'])],
-            'vaccinated'  => ['nullable', 'boolean'],
-            'sterilized'  => ['nullable', 'boolean'],
             'status'      => ['required', Rule::in(['tersedia', 'diproses', 'diadopsi'])],
             'description' => ['nullable', 'string', 'max:5000'],
             'characteristics' => ['nullable', 'string', 'max:500'],
             'medical_history' => ['nullable', 'string', 'max:5000'],
             'main_photo'  => ['nullable', 'image', 'max:4096'],
+            'vaccinated_rabies_date' => ['nullable', 'date'],
+            'vaccinated_distemper_date' => ['nullable', 'date'],
         ]);
+
+        // Secara eksplisit cast ke boolean agar false tersimpan saat di uncheck
+        $data['vaccinated'] = $request->boolean('vaccinated');
+        $data['vaccinated_distemper'] = $request->boolean('vaccinated_distemper');
+        $data['sterilized'] = $request->boolean('sterilized');
+        $data['dewormed'] = $request->boolean('dewormed');
+        $data['flea_free'] = $request->boolean('flea_free');
+        $data['special_needs'] = $request->boolean('special_needs');
+
+        return $data;
     }
 }

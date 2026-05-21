@@ -121,31 +121,7 @@
                 class="detail-photo-main mb-3"
                 onclick="openLightbox(this.src)">
 
-            {{-- Thumbnails --}}
-            @if($animal->photos->count())
-            <div class="d-flex gap-2 flex-wrap mb-4">
-                <img src="{{ $animal->mainPhotoUrl() }}"
-                    class="detail-thumb active"
-                    alt=""
-                    onclick="switchPhoto(this)">
-                @foreach($animal->photos->take(3) as $photo)
-                <img src="{{ asset('storage/' . $photo->photo_path) }}"
-                    class="detail-thumb"
-                    alt=""
-                    onclick="switchPhoto(this)">
-                @endforeach
-                @if($animal->photos->count() > 3)
-                <div style="width:88px;height:66px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;">
-                    <img src="{{ asset('storage/' . $animal->photos->get(3)->photo_path) }}"
-                        style="width:100%;height:100%;object-fit:cover;opacity:.45;" alt="">
-                    <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-                                 color:#fff;font-weight:700;font-size:1.1rem;background:rgba(0,0,0,.25);">
-                        +{{ $animal->photos->count() - 3 }}
-                    </span>
-                </div>
-                @endif
-            </div>
-            @endif
+            {{-- Thumbnails Dihilangkan sesuai permintaan --}}
 
             {{-- Tentang --}}
             <h3 class="fw-bold mb-3">Tentang {{ $animal->name }}</h3>
@@ -157,12 +133,12 @@
             @php
             $medisList = [];
             if (!empty($animal->vaccinated)) {
-                $tgl = $animal->vaccinated_rabies_date ? $animal->vaccinated_rabies_date->translatedFormat('M Y') : null;
-                $medisList[] = ['label' => 'Vaksin Rabies', 'note' => $tgl ? 'Terakhir: ' . $tgl : null];
+                $tgl = $animal->vaccinated_rabies_date ? $animal->vaccinated_rabies_date->translatedFormat('j F Y') : null;
+                $medisList[] = ['label' => 'Vaksin Rabies', 'note' => $tgl];
             }
             if (!empty($animal->vaccinated_distemper)) {
-                $tgl2 = $animal->vaccinated_distemper_date ? $animal->vaccinated_distemper_date->translatedFormat('M Y') : null;
-                $medisList[] = ['label' => 'Vaksinasi Distemper/Parvo', 'note' => $tgl2 ? 'Terakhir: ' . $tgl2 : null];
+                $tgl2 = $animal->vaccinated_distemper_date ? $animal->vaccinated_distemper_date->translatedFormat('j F Y') : null;
+                $medisList[] = ['label' => 'Vaksinasi Distemper/Parvo', 'note' => $tgl2];
             }
             if (!empty($animal->sterilized)) $medisList[] = ['label' => 'Sudah disteril', 'note' => null];
             if (!empty($animal->dewormed)) $medisList[] = ['label' => 'Pengobatan cacing rutin', 'note' => null];
