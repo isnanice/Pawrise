@@ -49,8 +49,10 @@ class ApplicationController extends Controller
         $this->authorizeShelter($application);
         $application->update([
             'status'       => 'ditolak',
-            'shelter_note' => $request->input('note'), // ← sudah fix
+            'shelter_note' => $request->input('note'),
         ]);
+        // Kembalikan status hewan ke tersedia
+        $application->animal->update(['status' => 'tersedia']);
         return back()->with('success', 'Permohonan ditolak.');
     }
 

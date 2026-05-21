@@ -60,6 +60,7 @@ class AdoptionController extends Controller
             return redirect()->route('user.applications')
                 ->with('error', 'Anda sudah memiliki permohonan aktif untuk hewan ini.');
         }
+
         $data = $request->validate([
             'full_name'  => ['nullable', 'string', 'max:160'],
             'whatsapp'   => ['nullable', 'string', 'max:30'],
@@ -104,6 +105,10 @@ class AdoptionController extends Controller
             return redirect()->route('user.applications')
                 ->with('error', 'Anda sudah memiliki permohonan aktif untuk hewan ini.');
         }
+
+        // Ubah status hewan jadi diproses saat permohonan resmi diajukan
+        $animal->update(['status' => 'diproses']);
+
         $data = $request->validate([
             'full_name'  => ['required', 'string', 'max:160'],
             'whatsapp'   => ['required', 'string', 'max:30'],
@@ -149,6 +154,7 @@ class AdoptionController extends Controller
         return redirect()->route('user.applications')
             ->with('success', 'Permohonan adopsi berhasil dikirim.');
     }
+
     // Menampilkan detail permohonan adopsi untuk adopter
     public function show(AdoptionApplication $application)
     {
